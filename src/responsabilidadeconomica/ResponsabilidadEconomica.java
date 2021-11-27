@@ -5,6 +5,7 @@
 package responsabilidadeconomica;
 
 import java.io.File;
+import java.io.FileWriter;
 
 /**
  *
@@ -17,17 +18,24 @@ public class ResponsabilidadEconomica {
      */
     public static void main(String[] args) {
         try{
-            File f = new File("data/");
+            File f = new File("data");
+            FileWriter fw;
             if(!f.exists()){
                 f.mkdir();
             }
-            new File("data/debts.json").createNewFile();
-            new File("data/categories.json").createNewFile();
-
+            String[] campos={"debts","categories"};
+            for(String s: campos){
+                f=new File("data/"+s+".json");
+                if(!f.exists()){
+                    f.createNewFile();
+                    fw=new FileWriter(f);
+                    fw.write("[ ]");
+                    f.setWritable(false);
+                    fw.flush();
+                }
+            }
         }catch(Exception e){
             System.out.println("message: "+e.getMessage());
         }
-        
-
     }
 }

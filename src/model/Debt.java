@@ -10,12 +10,12 @@ public class Debt {
     private int id;
     private String name;
     private long moneyToPaid; 
-    private Date startDate;
+    private String startDate;
     private int numQuotas;
     private String description; 
-    private Category category;
+    private String category;
     
-    public Debt(int id, String name, long moneyToPaid, Date startDate, int numQuotas, String description, Category category){
+    public Debt(int id, String name, long moneyToPaid, String startDate, int numQuotas, String description, String category){
         this.id = id;
         this.name = name;
         this.moneyToPaid = moneyToPaid;
@@ -23,6 +23,14 @@ public class Debt {
         this.numQuotas = numQuotas;
         this.description = description;
         this.category = category;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -41,11 +49,11 @@ public class Debt {
         this.moneyToPaid = moneyToPaid;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
@@ -65,12 +73,16 @@ public class Debt {
         this.description = description;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
-            
+    
+    @Override
+    public String toString(){
+        return ""+this.id+" "+this.name+" "+this.description+" "+this.startDate;
+    }
 }
