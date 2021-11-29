@@ -4,27 +4,29 @@
  */
 package model;
 
-import java.util.Date;
-
-public class Debt {
+public class Debt{
     private int id;
     private String name;
-    private long moneyToPaid; 
+    private float moneyToPaid; 
     private String startDate;
     private int numQuotas;
+    private String periodicity;
     private String description; 
-    private String category;
+    private int idCategory;
+    private int percent;
     
-    public Debt(int id, String name, long moneyToPaid, String startDate, int numQuotas, String description, String category){
+    public Debt(int id, String name, float moneyToPaid, String startDate, int numQuotas, String periodicity, String description, int idCategory, int percent){
         this.id = id;
         this.name = name;
         this.moneyToPaid = moneyToPaid;
         this.startDate = startDate;
         this.numQuotas = numQuotas;
+        this.periodicity=periodicity;
         this.description = description;
-        this.category = category;
+        this.idCategory = idCategory;
+        this.percent=percent;
     }
-
+    
     public int getId() {
         return id;
     }
@@ -41,11 +43,11 @@ public class Debt {
         this.name = name;
     }
 
-    public long getMoneyToPaid() {
+    public float getMoneyToPaid() {
         return moneyToPaid;
     }
 
-    public void setMoneyToPaid(long moneyToPaid) {
+    public void setMoneyToPaid(float moneyToPaid) {
         this.moneyToPaid = moneyToPaid;
     }
 
@@ -73,12 +75,28 @@ public class Debt {
         this.description = description;
     }
 
-    public String getCategory() {
-        return category;
+    public int getIdCategory() {
+        return idCategory;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setIdCategory(int idCategory) {
+        this.idCategory = idCategory;
+    }
+
+    public String getPeriodicity() {
+        return periodicity;
+    }
+
+    public void setPeriodicity(String periodicity) {
+        this.periodicity = periodicity;
+    }
+
+    public int getPercent() {
+        return percent;
+    }
+
+    public void setPercent(int percent) {
+        this.percent = percent;
     }
     
     @Override
