@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import javax.swing.table.DefaultTableModel;
 import model.Category;
-import structures.LinkList;
+import structures.MyLinkedList;
 import view.CategoryView;
 
 /**
@@ -19,7 +19,7 @@ import view.CategoryView;
 public class CategoryController {
     private CategoryView categoryView;
     private CategoryDAO categoryDAO;
-    private static LinkList<Category> categories=new LinkList();
+    private static MyLinkedList<Category> categories=new MyLinkedList();
     
     public CategoryController(CategoryView categoryView){
         this.categoryView = categoryView;

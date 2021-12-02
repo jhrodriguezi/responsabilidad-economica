@@ -14,15 +14,15 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import structures.ArrList;
+import structures.MyArrayList;
 
 public class DebtDAO {
     private final JSONParser jsonParser = new JSONParser();
     private final File f = new File("data/debts.json");
     private final File fIndex = new File("data/lastIndex.json");
     
-    public ArrList<Debt> getByCategoryDebt(int idCategory){
-        ArrList<Debt> arrayDebt = new ArrList();
+    public MyArrayList<Debt> getByCategoryDebt(int idCategory){
+        MyArrayList<Debt> arrayDebt = new MyArrayList();
         try{
             Object obj = jsonParser.parse(new FileReader(f));
             JSONArray jsonArr=(JSONArray) obj;
@@ -57,7 +57,7 @@ public class DebtDAO {
                 if (Integer.parseInt(debtJson.get("id").toString())==id){
                     return( new Debt(Integer.parseInt(debtJson.get("id").toString()),
                             debtJson.get("name").toString(),
-                            Long.parseLong(debtJson.get("moneyToPaid").toString()),
+                            Float.parseFloat(debtJson.get("moneyToPaid").toString()),
                             debtJson.get("startDate").toString(),
                             Integer.parseInt(debtJson.get("numQuotas").toString()),
                             debtJson.get("periodicity").toString(),
@@ -72,8 +72,8 @@ public class DebtDAO {
         return null;
     }
     
-    public ArrList<Debt> getAllDebt(){
-        ArrList<Debt> arrayDebt = new ArrList();
+    public MyArrayList<Debt> getAllDebt(){
+        MyArrayList<Debt> arrayDebt = new MyArrayList();
         try{
             FileReader fr = new FileReader(f);
             JSONArray jsonArr=(JSONArray) jsonParser.parse(fr);
@@ -102,7 +102,8 @@ public class DebtDAO {
             FileReader fr = new FileReader(f);
             JSONArray arrayJson= (JSONArray) jsonParser.parse(fr);
             JSONObject debtJson=new JSONObject();
-            debtJson.put("id", getLastIndex());
+            int id = getLastIndex();
+            debtJson.put("id", id);
             debtJson.put("name",debt.getName());
             debtJson.put("moneyToPaid",debt.getMoneyToPaid());
             debtJson.put("startDate",debt.getStartDate());
@@ -111,13 +112,14 @@ public class DebtDAO {
             debtJson.put("description",debt.getDescription());
             debtJson.put("idCategory",debt.getIdCategory());
             debtJson.put("percent",debt.getPercent());
+            debt.setId(id);
+            calculateEvents(debt);
             arrayJson.add(debtJson);
             FileWriter fw=new FileWriter(f);
             fw.write(arrayJson.toJSONString());
             f.setWritable(false);
             fw.flush();
             updateIndex();
-            calculateEvents(debt);
         }catch(IOException | ParseException e){
             System.out.println("message: "+e.getMessage());
         }
@@ -125,41 +127,46 @@ public class DebtDAO {
     
     private void calculateEvents(Debt debt){
         EventDAO eventDAO=new EventDAO();
-        int days = 0;
+        float days = 0;
         float frac = debt.getMoneyToPaid()/(float)debt.getNumQuotas();
-        String newDate = calculateDate(debt.getStartDate(), days);
         switch(debt.getPeriodicity().toLowerCase()){
             case "semanal" -> {
                 days=7;
             }
             case "mensual" -> {
-                days=30;
+                days=(float)30.417;
             }
             case "anual" -> {
-                days=365;
+                days=(float)365.2425;
             }
             case "semestral" -> {
-                days=183;
+                days=(float)182.62125;
             }
             default -> {
             }
         }
+        String newDate = calculateDate(debt.getStartDate(), days);
         for(int i=0; i<debt.getNumQuotas(); i++){
             eventDAO.insertEvent(new Event(0,debt.getId(), frac, newDate, i+1));
             newDate=(calculateDate(newDate,days));
         }
     }
     
-    private static String calculateDate(String date, int days){
+    private static String calculateDate(String date, float days){
         String[] d = date.split("-");
-        days += Integer.parseInt(d[0])*365+Integer.parseInt(d[1])*30+Integer.parseInt(d[2]);
-        int anios=days/365;
-        int meses=(days%365)/30;
-        if (meses==0)meses++;
-        days=(days%365)%30;
+        Float temp;
+        days += Integer.parseInt(d[0])*365.2425+(Integer.parseInt(d[1])-1)*30.417+Integer.parseInt(d[2]);
+        temp=(float)(days/365.2425);
+        days%=365.2425;
+        int anios=temp.intValue();
+        temp = (float)(days/30.417);
+        days%=30.417;
+        int meses=temp.intValue();
+        if(temp-temp.intValue()>0)meses++;
         if(days==0)days++;
-        return anios+"-"+meses+"-"+days;
+        return anios+"-"+meses+"-"+(int)days;
     }
+    
     
     public void updateIndex(){
         fIndex.setWritable(true);
@@ -255,16 +262,18 @@ public class DebtDAO {
     
     }
     
-    static void updatePercentDebt(int id, float value) {
+    static void updatePercentDebt(int id, float value, int cuota) {
         DebtDAO DAO = new DebtDAO();
         Debt debt = DAO.getByIdDebt(id);
         if(debt==null)return;
-        int per = Math.round((debt.getMoneyToPaid()-(debt.getPercent()/100)*debt.getMoneyToPaid()-value)/debt.getMoneyToPaid())*100;
+        float temp = (value*cuota)/debt.getMoneyToPaid();
+        int per=Math.round(temp*100);
         debt.setPercent(per);
         DAO.updateDebt(debt);
     }
     
     public static void main(String[] args) {
-        new DebtDAO().insertDebt(new Debt(1,"XD",(float)100.00,"2021-11-29",5,"Mensual","Prueba",0,0));
+        new DebtDAO().insertDebt(new Debt(1,"Carro 4k",(float)100.00,"2021-11-29",5,"Mensual","Prueba",0,0));
+        //new DebtDAO().insertDebt(new Debt(1,"PRUEBAA",(float)500.00,"2021-11-30",7,"Mensual","Prueba",0,0));
     }
 }

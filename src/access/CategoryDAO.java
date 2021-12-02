@@ -14,8 +14,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import structures.ArrList;
-import structures.LinkList;
+import structures.MyArrayList;
+import structures.MyLinkedList;
 
 /**
  *
@@ -26,8 +26,8 @@ public class CategoryDAO {
     private final File f = new File("data/categories.json");
     private final File fIndex = new File("data/lastIndex.json");
     
-    public LinkList<Category> getAllCategory(){
-        LinkList<Category> linkCategory = new LinkList();
+    public MyLinkedList<Category> getAllCategory(){
+        MyLinkedList<Category> linkCategory = new MyLinkedList();
         try{
             FileReader fr = new FileReader(f);
             JSONArray jsonArr=(JSONArray) jsonParser.parse(fr);
@@ -119,7 +119,7 @@ public class CategoryDAO {
             }
             arrayJson.remove(tempJson);
             DebtDAO debtDAO = new DebtDAO();
-            ArrList<Debt> al=new ArrList();
+            MyArrayList<Debt> al=new MyArrayList();
             al=debtDAO.getByCategoryDebt(category.getId());
             Debt debt;
             for(int i=0; i<al.size(); i++){

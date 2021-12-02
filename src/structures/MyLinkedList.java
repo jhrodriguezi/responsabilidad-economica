@@ -5,33 +5,31 @@
 package structures;
 
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Spliterator;
-import java.util.function.UnaryOperator;
+
 /**
  *
  * @author DELL
  */
-public class ArrList<T> implements List<T>{
+public class MyLinkedList<T> implements List<T>{
+    private Node<T> initialNode;
+    private Node<T> endNode;
     private int size;
-    private T[] array;
-    private static final int DEFAULT_DIMENSION=10;
     
-    public ArrList(){
+    public MyLinkedList(){
         clear();
     }
     
     @Override
     public int size() {
-        return this.size;
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        return this.size==0;
+        return size==0;
     }
 
     @Override
@@ -56,13 +54,23 @@ public class ArrList<T> implements List<T>{
 
     @Override
     public boolean add(T e) {
-        add(size(),e);
+        add(size,e);
         return true;
     }
 
     @Override
     public boolean remove(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Node<T> n = initialNode.getNextNode();
+        for(int i=0; i<size(); i++){
+            if(n.getValue().equals(o)){
+                n.getPreviousNode().setNextNode(n.getNextNode());
+                n.getNextNode().setPreviousNode(n.getPreviousNode());
+                size--;
+                return true;
+            }
+            n=n.getNextNode();
+        }
+        return false;
     }
 
     @Override
@@ -91,70 +99,86 @@ public class ArrList<T> implements List<T>{
     }
 
     @Override
-    public void replaceAll(UnaryOperator<T> operator) {
-        List.super.replaceAll(operator); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void sort(Comparator<? super T> c) {
-        List.super.sort(c); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public void clear() {
-        this.size=0;
-        ensureCapacity(DEFAULT_DIMENSION);
+        initialNode=new Node();
+        endNode=new Node();
+        initialNode.setNextNode(endNode);
+        endNode.setPreviousNode(initialNode);
+        size=0;
     }
 
     @Override
     public T get(int index) {
-        if(index>=this.size || index<0){
-            throw new ArrayIndexOutOfBoundsException("Index: "+index+" out of range");
-        }
-        return this.array[index];
+        checkIndex(index);
+        return getNode(index).getValue();
     }
 
     @Override
     public T set(int index, T element) {
-        if(index<0 || index>=this.size)
-            throw new ArrayIndexOutOfBoundsException("Index: "+index+" out of range");
-        T old = this.array[index];
-        this.array[index] = element;
-        return old;
+        checkIndex(index);
+        Node<T> n = getNode(index);
+        T oldValue = n.getValue();
+        n.setValue(element);
+        return oldValue;
     }
-
+    
+    public Node<T> getNode(int index){
+        Node<T> n;
+        if(index<size()/2){
+            n = initialNode.getNextNode();
+            for(int i=0;i<index;i++)n=n.getNextNode();
+        }else{
+            n = endNode;
+            for(int i=size();i>index;i--)n=n.getPreviousNode();
+        }
+        return n;
+    }
+    
     @Override
     public void add(int index, T element) {
-        if(this.array.length==size())
-            ensureCapacity(size()*2+1);
-        for(int i=this.size;i>index;i--)
-            this.array[i]=this.array[i-1];
-        this.array[index]=element;
-        this.size++;
+        if(index!=size())checkIndex(index);
+        Node<T> n = getNode(index);
+        Node<T> newNode = new Node();
+        newNode.setValue(element);
+        newNode.setNextNode(n);
+        newNode.setPreviousNode(n.getPreviousNode());
+        newNode.getPreviousNode().setNextNode(newNode);
+        n.setPreviousNode(newNode);
+        size++;
     }
 
     @Override
     public T remove(int index) {
-        T removedItem = this.array[index];
-        for(int i=index; i<size()-1;i++)
-            this.array[i]=this.array[i+1];
-        this.size--;
-        return removedItem;
+        checkIndex(index);
+        Node<T> n = getNode(index);
+        n.getNextNode().setPreviousNode(n.getPreviousNode());
+        n.getPreviousNode().setNextNode(n.getNextNode());
+        size--;
+        return n.getValue();
     }
 
     @Override
     public int indexOf(Object o) {
-        for(int i=0; i<this.size;i++){
-            if(this.array[i].equals(o)){
-                return i;
-            }
-        }
+        Node<T> n = initialNode.getNextNode();
+        int i = 0;
+        while(!n.getValue().equals(o) && n.getNextNode()!=endNode){
+            n=n.getNextNode();
+            i++;
+        }        
+        if(n.getValue().equals(o))return i;
         return -1;
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Node<T> n = endNode.getPreviousNode();
+        int i = size()-1;
+        while(!n.getValue().equals(o) && n.getPreviousNode()!=initialNode){
+            n=n.getPreviousNode();
+            i--;
+        }        
+        if(n.getValue().equals(o))return i;
+        return -1;
     }
 
     @Override
@@ -171,18 +195,10 @@ public class ArrList<T> implements List<T>{
     public List<T> subList(int fromIndex, int toIndex) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public Spliterator<T> spliterator() {
-        return List.super.spliterator(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void ensureCapacity(int newCapacity){
-        if(!(newCapacity<this.size)){
-            T[] old = this.array;
-            this.array = (T[]) new Object[newCapacity];
-            for(int i=0; i<this.size; i++)
-                this.array[i]=old[i];
+    
+    public void checkIndex(int index){
+        if(index<0 || index>=size()){
+            throw new IndexOutOfBoundsException("index out of range");
         }
     }
     
@@ -190,12 +206,54 @@ public class ArrList<T> implements List<T>{
     public String toString(){
         String message="";
         message+="[";
-        for(int i=0; i<size-1; i++){
-            message+=this.array[i]+",";
+        if(initialNode.getNextNode()!=null && initialNode.getNextNode()!=endNode){
+            Node<T> temp=initialNode.getNextNode();
+            do {
+                message+=temp.getValue();
+                if(temp.getNextNode()!=null && temp.getNextNode()!=endNode)message+=",";
+                else break;
+                temp=temp.getNextNode();
+            } while (true);
         }
-        message+=this.array[--size];
         message+="]";
         return message;
-    } 
+    }
+}
+
+class Node<T>{
+    private T value;
+    private Node nextNode;
+    private Node previousNode;
+    
+    public Node(){
+        this.value=null;
+        this.nextNode=null;
+        this.previousNode=null;
+    }
+
+    public T getValue() {
+        return value;
+    }
+
+    public void setValue(T value) {
+        this.value = value;
+    }
+
+    public Node getNextNode() {
+        return nextNode;
+    }
+
+    public void setNextNode(Node nextNode) {
+        this.nextNode = nextNode;
+    }
+
+    public Node getPreviousNode() {
+        return previousNode;
+    }
+
+    public void setPreviousNode(Node previousNode) {
+        this.previousNode = previousNode;
+    }
+    
     
 }

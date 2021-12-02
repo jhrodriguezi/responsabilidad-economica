@@ -6,8 +6,11 @@ package view;
 
 import controller.DebtController;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  *
@@ -22,7 +25,6 @@ public class DebtView extends javax.swing.JPanel {
         initComponents();
         debtController=new DebtController(this);
         this.deshabilitarBotones();
-        debtController.showDebt();
     }
 
     /**
@@ -45,43 +47,45 @@ public class DebtView extends javax.swing.JPanel {
         btnMoverActualizar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        btnUndo = new javax.swing.JButton();
+        btnRedo = new javax.swing.JButton();
         panelAgregarD = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtNombreAgregar = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtValorAgregar = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtNumCuotasAgregar = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtFechaInicialAgregar = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbxPeriodicidadAgregar = new javax.swing.JComboBox<>();
+        cbxCategoriaAgregar = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtDescripcionAgregar = new javax.swing.JTextArea();
         jLabel9 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
         btnRegresarAgregar = new javax.swing.JButton();
         panelActualizarD = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtNombreActualizar = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        txtValorActualizar = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        txtNumCuotasActualizar = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        txtFechaInicialActualizar = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        cbxPeriodicidadActualizar = new javax.swing.JComboBox<>();
+        cbxCategoriaActualizar = new javax.swing.JComboBox<>();
         jLabel16 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        txtDescripcionActualizar = new javax.swing.JTextArea();
         jLabel17 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
         btnRegresarActualizar = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -131,6 +135,10 @@ public class DebtView extends javax.swing.JPanel {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("DEUDAS");
 
+        btnUndo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Arrows-Undo-icon.png"))); // NOI18N
+
+        btnRedo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Arrows-Redo-icon.png"))); // NOI18N
+
         javax.swing.GroupLayout panelPrincipalDLayout = new javax.swing.GroupLayout(panelPrincipalD);
         panelPrincipalD.setLayout(panelPrincipalDLayout);
         panelPrincipalDLayout.setHorizontalGroup(
@@ -139,15 +147,19 @@ public class DebtView extends javax.swing.JPanel {
                 .addGroup(panelPrincipalDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelPrincipalDLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalDLayout.createSequentialGroup()
-                        .addGap(66, 66, 66)
+                        .addGap(28, 28, 28)
                         .addComponent(btnMoverAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47)
-                        .addComponent(btnMoverActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                        .addGap(50, 50, 50)
+                        .addGap(28, 28, 28)
+                        .addComponent(btnMoverActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(26, 26, 26)
                         .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(69, 69, 69))
+                        .addGap(55, 55, 55)
+                        .addComponent(btnUndo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRedo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25))
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -157,11 +169,18 @@ public class DebtView extends javax.swing.JPanel {
                 .addGap(6, 6, 6)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(panelPrincipalDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnMoverAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                    .addComponent(btnMoverActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                    .addComponent(btnBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
-                .addGap(44, 44, 44)
+                .addGroup(panelPrincipalDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelPrincipalDLayout.createSequentialGroup()
+                        .addGroup(panelPrincipalDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnMoverAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnMoverActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(44, 44, 44))
+                    .addGroup(panelPrincipalDLayout.createSequentialGroup()
+                        .addGroup(panelPrincipalDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnUndo)
+                            .addComponent(btnRedo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -175,44 +194,50 @@ public class DebtView extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("Nombre");
 
-        jTextField1.setText("jTextField1");
-
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("Valor a pagar");
 
-        jTextField2.setText("jTextField1");
+        txtValorAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtValorAgregarActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setText("Numero de cuotas");
 
-        jTextField3.setText("jTextField1");
-
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setText("Fecha inicial");
 
-        jTextField4.setText("jTextField1");
+        txtFechaInicialAgregar.setText("AAAA-MM-DD");
+        txtFechaInicialAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFechaInicialAgregarActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setText("Descripcion");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxPeriodicidadAgregar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semanal", "Mensual", "Semestral", "Anual" }));
+        cbxPeriodicidadAgregar.setSelectedIndex(1);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxCategoriaAgregar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setText("Categoria");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        txtDescripcionAgregar.setColumns(20);
+        txtDescripcionAgregar.setRows(5);
+        jScrollPane2.setViewportView(txtDescripcionAgregar);
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setText("Periodicidad");
 
-        jButton1.setText("Agregar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAgregarActionPerformed(evt);
             }
         });
 
@@ -238,21 +263,21 @@ public class DebtView extends javax.swing.JPanel {
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelAgregarDLayout.createSequentialGroup()
                                 .addGroup(panelAgregarDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNombreAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel5)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                                    .addComponent(txtNumCuotasAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                                 .addGroup(panelAgregarDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtValorAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel4)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbxPeriodicidadAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(54, 54, 54)
                                 .addGroup(panelAgregarDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtFechaInicialAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbxCategoriaAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel6))))
                         .addGap(36, 36, 36))))
             .addGroup(panelAgregarDLayout.createSequentialGroup()
@@ -262,7 +287,7 @@ public class DebtView extends javax.swing.JPanel {
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelAgregarDLayout.createSequentialGroup()
                         .addGap(141, 141, 141)
-                        .addComponent(jButton1)
+                        .addComponent(btnAgregar)
                         .addGap(92, 92, 92)
                         .addComponent(btnRegresarAgregar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -278,36 +303,36 @@ public class DebtView extends javax.swing.JPanel {
                         .addGroup(panelAgregarDLayout.createSequentialGroup()
                             .addComponent(jLabel3)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNombreAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelAgregarDLayout.createSequentialGroup()
                             .addComponent(jLabel4)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtValorAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panelAgregarDLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtFechaInicialAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(panelAgregarDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelAgregarDLayout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtNumCuotasAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelAgregarDLayout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbxPeriodicidadAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelAgregarDLayout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbxCategoriaAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
                 .addGap(3, 3, 3)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(panelAgregarDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnAgregar)
                     .addComponent(btnRegresarAgregar))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
@@ -321,44 +346,50 @@ public class DebtView extends javax.swing.JPanel {
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setText("Nombre");
 
-        jTextField5.setText("jTextField1");
+        txtNombreActualizar.setText("jTextField1");
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel12.setText("Valor a pagar");
 
-        jTextField6.setText("jTextField1");
+        txtValorActualizar.setText("jTextField1");
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel13.setText("Numero de cuotas");
 
-        jTextField7.setText("jTextField1");
+        txtNumCuotasActualizar.setText("jTextField1");
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setText("Fecha inicial");
 
-        jTextField8.setText("jTextField1");
+        txtFechaInicialActualizar.setText("jTextField1");
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel15.setText("Descripcion");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxPeriodicidadActualizar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semanal", "Mensual", "Semestral", "Anual" }));
+        cbxPeriodicidadActualizar.setSelectedIndex(1);
+        cbxPeriodicidadActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxPeriodicidadActualizarActionPerformed(evt);
+            }
+        });
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxCategoriaActualizar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel16.setText("Categoria");
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane3.setViewportView(jTextArea2);
+        txtDescripcionActualizar.setColumns(20);
+        txtDescripcionActualizar.setRows(5);
+        jScrollPane3.setViewportView(txtDescripcionActualizar);
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setText("Periodicidad");
 
-        jButton3.setText("Actualizar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnActualizarActionPerformed(evt);
             }
         });
 
@@ -384,22 +415,22 @@ public class DebtView extends javax.swing.JPanel {
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelActualizarDLayout.createSequentialGroup()
                                 .addGroup(panelActualizarDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNombreActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel11)
                                     .addComponent(jLabel13)
-                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                                    .addComponent(txtNumCuotasActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                                 .addGroup(panelActualizarDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtValorActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel12)
-                                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbxPeriodicidadActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(54, 54, 54)
                                 .addGroup(panelActualizarDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtFechaInicialActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel14)
                                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(cbxCategoriaActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(36, 36, 36))))
             .addGroup(panelActualizarDLayout.createSequentialGroup()
                 .addGroup(panelActualizarDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -408,7 +439,7 @@ public class DebtView extends javax.swing.JPanel {
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelActualizarDLayout.createSequentialGroup()
                         .addGap(141, 141, 141)
-                        .addComponent(jButton3)
+                        .addComponent(btnActualizar)
                         .addGap(92, 92, 92)
                         .addComponent(btnRegresarActualizar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -424,36 +455,36 @@ public class DebtView extends javax.swing.JPanel {
                         .addGroup(panelActualizarDLayout.createSequentialGroup()
                             .addComponent(jLabel11)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNombreActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelActualizarDLayout.createSequentialGroup()
                             .addComponent(jLabel12)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtValorActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panelActualizarDLayout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtFechaInicialActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(panelActualizarDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelActualizarDLayout.createSequentialGroup()
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtNumCuotasActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelActualizarDLayout.createSequentialGroup()
                         .addComponent(jLabel17)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbxPeriodicidadActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelActualizarDLayout.createSequentialGroup()
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbxCategoriaActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel15)
                 .addGap(3, 3, 3)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(panelActualizarDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
+                    .addComponent(btnActualizar)
                     .addComponent(btnRegresarActualizar))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
@@ -465,13 +496,13 @@ public class DebtView extends javax.swing.JPanel {
         debtController.MoveActionPerformed(evt);
     }//GEN-LAST:event_btnMoverAgregarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        debtController.MoveActionPerformed(evt);
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnMoverActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoverActualizarActionPerformed
         debtController.MoveActionPerformed(evt);
@@ -493,19 +524,33 @@ public class DebtView extends javax.swing.JPanel {
         debtController.TableMouseClicked(evt);
     }//GEN-LAST:event_tableDebtsMouseClicked
 
+    private void cbxPeriodicidadActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxPeriodicidadActualizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxPeriodicidadActualizarActionPerformed
+
+    private void txtValorAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorAgregarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtValorAgregarActionPerformed
+
+    private void txtFechaInicialAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaInicialAgregarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFechaInicialAgregarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnMoverActualizar;
     private javax.swing.JButton btnMoverAgregar;
+    private javax.swing.JButton btnRedo;
     private javax.swing.JButton btnRegresarActualizar;
     private javax.swing.JButton btnRegresarAgregar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JButton btnUndo;
+    private javax.swing.JComboBox<String> cbxCategoriaActualizar;
+    private javax.swing.JComboBox<String> cbxCategoriaAgregar;
+    private javax.swing.JComboBox<String> cbxPeriodicidadActualizar;
+    private javax.swing.JComboBox<String> cbxPeriodicidadAgregar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -526,30 +571,28 @@ public class DebtView extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JPanel panelActualizarD;
     private javax.swing.JPanel panelAgregarD;
     private javax.swing.JPanel panelPrincipalD;
     private javax.swing.JTable tableDebts;
+    private javax.swing.JTextArea txtDescripcionActualizar;
+    private javax.swing.JTextArea txtDescripcionAgregar;
+    private javax.swing.JTextField txtFechaInicialActualizar;
+    private javax.swing.JTextField txtFechaInicialAgregar;
+    private javax.swing.JTextField txtNombreActualizar;
+    private javax.swing.JTextField txtNombreAgregar;
+    private javax.swing.JTextField txtNumCuotasActualizar;
+    private javax.swing.JTextField txtNumCuotasAgregar;
+    private javax.swing.JTextField txtValorActualizar;
+    private javax.swing.JTextField txtValorAgregar;
     // End of variables declaration//GEN-END:variables
-    //METODO PARA LLENAR EL COMBOBOX
-    /*public void itemsComboTiposHab(ArrayList<String> listItems){
-        this.comboItems.removeAllItems();
-        this.comboItems.addItem("");
-        for(String l : listItems){
-            this.comboItems.addItem(l);
-        }
-        this.jPanel2.updateUI();
-    }*/
+    public void cleanFieldsAgregar(){
+        this.txtDescripcionAgregar.setText("");
+        this.txtFechaInicialAgregar.setText("AAAA-MM-DD");
+        this.txtNombreAgregar.setText("");
+        this.txtNumCuotasAgregar.setText("");
+        this.txtValorAgregar.setText("");
+    }
     
     public void deshabilitarBotones(){
         this.btnBorrar.setEnabled(false);
@@ -651,6 +694,159 @@ public class DebtView extends javax.swing.JPanel {
         this.btnRegresarAgregar = btnRegresarAgregar;
     }
 
+    public DebtController getDebtController() {
+        return debtController;
+    }
+
+    public void setDebtController(DebtController debtController) {
+        this.debtController = debtController;
+    }
+
+    public JButton getBtnActualizar() {
+        return btnActualizar;
+    }
+
+    public void setBtnActualizar(JButton btnActualizar) {
+        this.btnActualizar = btnActualizar;
+    }
+
+    public JButton getBtnAgregar() {
+        return btnAgregar;
+    }
+
+    public void setBtnAgregar(JButton btnAgregar) {
+        this.btnAgregar = btnAgregar;
+    }
+
+    public JButton getBtnRedo() {
+        return btnRedo;
+    }
+
+    public void setBtnRedo(JButton btnRedo) {
+        this.btnRedo = btnRedo;
+    }
+
+    public JButton getBtnUndo() {
+        return btnUndo;
+    }
+
+    public void setBtnUndo(JButton btnUndo) {
+        this.btnUndo = btnUndo;
+    }
+
+    public JComboBox<String> getCbxCategoriaActualizar() {
+        return cbxCategoriaActualizar;
+    }
+
+    public void setCbxCategoriaActualizar(JComboBox<String> cbxCategoriaActualizar) {
+        this.cbxCategoriaActualizar = cbxCategoriaActualizar;
+    }
+
+    public JComboBox<String> getCbxCategoriaAgregar() {
+        return cbxCategoriaAgregar;
+    }
+
+    public void setCbxCategoriaAgregar(JComboBox<String> cbxCategoriaAgregar) {
+        this.cbxCategoriaAgregar = cbxCategoriaAgregar;
+    }
+
+    public JComboBox<String> getCbxPeriodicidadActualizar() {
+        return cbxPeriodicidadActualizar;
+    }
+
+    public void setCbxPeriodicidadActualizar(JComboBox<String> cbxPeriodicidadActualizar) {
+        this.cbxPeriodicidadActualizar = cbxPeriodicidadActualizar;
+    }
+
+    public JComboBox<String> getCbxPeriodicidadAgregar() {
+        return cbxPeriodicidadAgregar;
+    }
+
+    public void setCbxPeriodicidadAgregar(JComboBox<String> cbxPeriodicidadAgregar) {
+        this.cbxPeriodicidadAgregar = cbxPeriodicidadAgregar;
+    }
+
+    public JTextArea getTxtDescripcionActualizar() {
+        return txtDescripcionActualizar;
+    }
+
+    public void setTxtDescripcionActualizar(JTextArea txtDescripcionActualizar) {
+        this.txtDescripcionActualizar = txtDescripcionActualizar;
+    }
+
+    public JTextArea getTxtDescripcionAgregar() {
+        return txtDescripcionAgregar;
+    }
+
+    public void setTxtDescripcionAgregar(JTextArea txtDescripcionAgregar) {
+        this.txtDescripcionAgregar = txtDescripcionAgregar;
+    }
+
+    public JTextField getTxtFechaInicialActualizar() {
+        return txtFechaInicialActualizar;
+    }
+
+    public void setTxtFechaInicialActualizar(JTextField txtFechaInicialActualizar) {
+        this.txtFechaInicialActualizar = txtFechaInicialActualizar;
+    }
+
+    public JTextField getTxtFechaInicialAgregar() {
+        return txtFechaInicialAgregar;
+    }
+
+    public void setTxtFechaInicialAgregar(JTextField txtFechaInicialAgregar) {
+        this.txtFechaInicialAgregar = txtFechaInicialAgregar;
+    }
+
+    public JTextField getTxtNombreActualizar() {
+        return txtNombreActualizar;
+    }
+
+    public void setTxtNombreActualizar(JTextField txtNombreActualizar) {
+        this.txtNombreActualizar = txtNombreActualizar;
+    }
+
+    public JTextField getTxtNombreAgregar() {
+        return txtNombreAgregar;
+    }
+
+    public void setTxtNombreAgregar(JTextField txtNombreAgregar) {
+        this.txtNombreAgregar = txtNombreAgregar;
+    }
+
+    public JTextField getTxtNumCuotasActualizar() {
+        return txtNumCuotasActualizar;
+    }
+
+    public void setTxtNumCuotasActualizar(JTextField txtNumCuotasActualizar) {
+        this.txtNumCuotasActualizar = txtNumCuotasActualizar;
+    }
+
+    public JTextField getTxtNumCuotasAgregar() {
+        return txtNumCuotasAgregar;
+    }
+
+    public void setTxtNumCuotasAgregar(JTextField txtNumCuotasAgregar) {
+        this.txtNumCuotasAgregar = txtNumCuotasAgregar;
+    }
+
+    public JTextField getTxtValorActualizar() {
+        return txtValorActualizar;
+    }
+
+    public void setTxtValorActualizar(JTextField txtValorActualizar) {
+        this.txtValorActualizar = txtValorActualizar;
+    }
+
+    public JTextField getTxtValorAgregar() {
+        return txtValorAgregar;
+    }
+
+    public void setTxtValorAgregar(JTextField txtValorAgregar) {
+        this.txtValorAgregar = txtValorAgregar;
+    }
+    
+    
     
 
     

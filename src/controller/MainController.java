@@ -4,7 +4,11 @@
  */
 package controller;
 
+import access.DebtDAO;
+import access.EventDAO;
 import java.awt.event.ActionEvent;
+import model.Debt;
+import model.Event;
 import view.Main;
 
 /**
@@ -12,7 +16,8 @@ import view.Main;
  * @author DELL
  */
 public class MainController {
-    private final Main main;
+    private static Main main;
+    
     
     public MainController(Main main){
         this.main=main;
@@ -25,6 +30,21 @@ public class MainController {
             main.cambiarAEvent();
         }else if(e.getSource()==main.getBtnCategorias()){
             main.cambiarACategory();
+        }else if(e.getSource()==main.getBtnSi()){
+            if(EventController.areThereEvents()){
+                main.cambiarAInfo();
+                EventController.showEventAsc();
+            }else{
+                main.getLblNoHayEventos().setText("¡Felicitaciones! no tiene fraccionamientos pendientes");
+                main.getLblNoHayEventos().setVisible(true);
+            }
+        }else if(e.getSource()==main.getBtnPagado()){
+            EventController.deleteEvent();
+            EventController.showEventAsc();
         }
+    }
+    
+    public static Main getMainView(){
+        return main;
     }
 }

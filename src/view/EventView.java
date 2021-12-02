@@ -149,15 +149,7 @@ public class EventView extends javax.swing.JPanel {
     private javax.swing.JPanel panelPrincipalE;
     private javax.swing.JTable tableEvents;
     // End of variables declaration//GEN-END:variables
-    //METODO PARA LLENAR EL COMBOBOX
-    /*public void itemsComboTiposHab(ArrayList<String> listItems){
-        this.comboItems.removeAllItems();
-        this.comboItems.addItem("");
-        for(String l : listItems){
-            this.comboItems.addItem(l);
-        }
-        this.jPanel2.updateUI();
-    }*/
+    
     
     public void deshabilitarBotones(){
         this.btnCompletarEvent.setEnabled(false);

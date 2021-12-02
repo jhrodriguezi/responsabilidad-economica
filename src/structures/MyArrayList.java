@@ -5,31 +5,34 @@
 package structures;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-
+import java.util.Spliterator;
+import java.util.function.UnaryOperator;
+import model.Event;
 /**
  *
  * @author DELL
  */
-public class LinkList<T> implements List<T>{
-    private Node initialNode;
+public class MyArrayList<T> implements List<T>{
     private int size;
+    private T[] array;
+    private static final int DEFAULT_DIMENSION=10;
     
-    public LinkList(){
-        initialNode=null;
-        size=0;
+    public MyArrayList(){
+        clear();
     }
     
     @Override
     public int size() {
-        return size;
+        return this.size;
     }
 
     @Override
     public boolean isEmpty() {
-        return this.initialNode==null;
+        return this.size==0;
     }
 
     @Override
@@ -54,28 +57,13 @@ public class LinkList<T> implements List<T>{
 
     @Override
     public boolean add(T e) {
-        add(size,e);
+        add(size(),e);
         return true;
     }
 
     @Override
     public boolean remove(Object o) {
-        Node temp=this.initialNode;
-        if(temp.getValue()!=null && temp.getValue().equals(o)){
-            this.initialNode=initialNode.getNextNode();
-            size--;
-            return true;
-        }
-        
-        for(int i=1; i<this.size(); i++){
-            if(temp.getNextNode().getValue()!=null && temp.getNextNode().getValue().equals(o)){
-                temp.setNextNode(temp.getNextNode().getNextNode());
-                size--;
-                return true;
-            }
-            temp=temp.getNextNode();
-        }
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -104,62 +92,68 @@ public class LinkList<T> implements List<T>{
     }
 
     @Override
+    public void replaceAll(UnaryOperator<T> operator) {
+        List.super.replaceAll(operator); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void sort(Comparator<? super T> c) {
+        List.super.sort(c); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
     public void clear() {
-        this.initialNode=null;
+        this.size=0;
+        ensureCapacity(DEFAULT_DIMENSION);
     }
 
     @Override
     public T get(int index) {
-        return getNode(index).getValue();
+        checkIndex(index);
+        return this.array[index];
     }
 
     @Override
     public T set(int index, T element) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        checkIndex(index);
+        T old = this.array[index];
+        this.array[index] = element;
+        return old;
     }
-    
-    public Node<T> getNode(int index){
-        if(index==0)
-            return this.initialNode;
-        else
-            return getNode(index-1).getNextNode();
-    }
-    
+
     @Override
     public void add(int index, T element) {
-        if(index<0 || index>size)
-            throw new IndexOutOfBoundsException("Index: "+index+" out of range");
-        else if(index==0){
-            Node<T> temp = initialNode;
-            initialNode=new Node();
-            initialNode.setValue(element);
-            initialNode.setNextNode(temp);
-        }else{    
-            Node<T> newNode=new Node();
-            newNode.setValue(element);
-            Node<T> temp = getNode(index-1);
-            Node<T> tempNextNode = temp.getNextNode();
-            temp.setNextNode(newNode);
-            newNode.setNextNode(tempNextNode);
-        }
-        size++;
+        if(index!=size)checkIndex(index);
+        if(this.array.length==size())
+            ensureCapacity(size()*2+1);
+        for(int i=this.size;i>index;i--)
+            this.array[i]=this.array[i-1];
+        this.array[index]=element;
+        this.size++;
     }
 
     @Override
     public T remove(int index) {
-        T value = getNode(index).getValue();
-        remove(value);
-        return value;
+        checkIndex(index);
+        T removedItem = this.array[index];
+        for(int i=index; i<size()-1;i++)
+            this.array[i]=this.array[i+1];
+        this.size--;
+        return removedItem;
+    }
+    
+    public void checkIndex(int index){
+        if(index<0 || index>=size()){
+            throw new IndexOutOfBoundsException("index out of range");
+        }
     }
 
     @Override
     public int indexOf(Object o) {
-        Node temp=this.initialNode;
-        for(int i=0; i<this.size; i++){
-            if(temp.getValue()!=null && temp.getValue().equals(o)){
+        for(int i=0; i<this.size;i++){
+            if(this.array[i].equals(o)){
                 return i;
             }
-            temp=temp.getNextNode();
         }
         return -1;
     }
@@ -183,48 +177,33 @@ public class LinkList<T> implements List<T>{
     public List<T> subList(int fromIndex, int toIndex) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public Spliterator<T> spliterator() {
+        return List.super.spliterator(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void ensureCapacity(int newCapacity){
+        if(!(newCapacity<this.size)){
+            T[] old = this.array;
+            this.array = (T[]) new Object[newCapacity];
+            for(int i=0; i<this.size; i++)
+                this.array[i]=old[i];
+        }
+    }
     
     @Override
     public String toString(){
         String message="";
         message+="[";
-        if(this.initialNode!=null){
-            Node temp=initialNode;
-            do {
-                message+=temp.getValue();
-                if(temp.getNextNode()!=null)message+=",";
-                else break;
-                temp=temp.getNextNode();
-            } while (true);
+        if(size>0){
+            for(int i=0; i<size-1; i++){
+                message+=this.array[i]+",";
+            }
+            message+=this.array[size-1];
         }
         message+="]";
         return message;
-    }
-}
-
-class Node<T>{
-    private T value;
-    private Node nextNode;
-    
-    public Node(){
-        this.value=null;
-        this.nextNode=null;
-    }
-
-    public T getValue() {
-        return value;
-    }
-
-    public void setValue(T value) {
-        this.value = value;
-    }
-
-    public Node getNextNode() {
-        return nextNode;
-    }
-
-    public void setNextNode(Node nextNode) {
-        this.nextNode = nextNode;
     }
     
 }

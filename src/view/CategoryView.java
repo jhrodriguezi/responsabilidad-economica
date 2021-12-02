@@ -45,6 +45,8 @@ public class CategoryView extends javax.swing.JPanel {
         lblCategory = new javax.swing.JLabel();
         btnAgregarCat = new javax.swing.JButton();
         btnActualizarCat = new javax.swing.JButton();
+        btnUndo = new javax.swing.JButton();
+        btnRedo = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         setLayout(new java.awt.CardLayout());
@@ -92,6 +94,10 @@ public class CategoryView extends javax.swing.JPanel {
             }
         });
 
+        btnUndo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Arrows-Undo-icon.png"))); // NOI18N
+
+        btnRedo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Arrows-Redo-icon.png"))); // NOI18N
+
         javax.swing.GroupLayout panelPrincipalCLayout = new javax.swing.GroupLayout(panelPrincipalC);
         panelPrincipalC.setLayout(panelPrincipalCLayout);
         panelPrincipalCLayout.setHorizontalGroup(
@@ -103,13 +109,17 @@ public class CategoryView extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalCLayout.createSequentialGroup()
-                        .addGap(67, 67, 67)
+                        .addGap(34, 34, 34)
                         .addComponent(btnAgregarCat)
-                        .addGap(73, 73, 73)
+                        .addGap(29, 29, 29)
                         .addComponent(btnActualizarCat)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(29, 29, 29)
                         .addComponent(btnBorrarCat)
-                        .addGap(68, 68, 68)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnUndo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRedo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)))
                 .addContainerGap())
         );
         panelPrincipalCLayout.setVerticalGroup(
@@ -118,10 +128,16 @@ public class CategoryView extends javax.swing.JPanel {
                 .addGap(6, 6, 6)
                 .addComponent(lblCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(panelPrincipalCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBorrarCat, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                    .addComponent(btnAgregarCat, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                    .addComponent(btnActualizarCat, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
+                .addGroup(panelPrincipalCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelPrincipalCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnBorrarCat, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                        .addComponent(btnAgregarCat, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                        .addComponent(btnActualizarCat, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
+                    .addGroup(panelPrincipalCLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(panelPrincipalCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnUndo)
+                            .addComponent(btnRedo))))
                 .addGap(44, 44, 44)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -151,6 +167,8 @@ public class CategoryView extends javax.swing.JPanel {
     private javax.swing.JButton btnActualizarCat;
     private javax.swing.JButton btnAgregarCat;
     private javax.swing.JButton btnBorrarCat;
+    private javax.swing.JButton btnRedo;
+    private javax.swing.JButton btnUndo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCategory;
     private javax.swing.JPanel panelPrincipalC;
