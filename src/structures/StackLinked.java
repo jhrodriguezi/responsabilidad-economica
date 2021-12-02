@@ -1,35 +1,31 @@
 package structures;
 
+import java.util.EmptyStackException;
+
 public class StackLinked<T> extends MyLinkedList<T> {
-
-    //Atributos
-
-    private MyLinkedList<T> list;
-
-    public StackLinked(){
-        this.list = new MyLinkedList<T>();
-    }
-
+    
     public boolean empty(){
-        return list.isEmpty();
+        return isEmpty();
     }
     
     public T peek(){
-        T element = list.get(size()-1);
+        if(empty())throw new EmptyStackException();
+        T element = get(size()-1);
         return element;
     }
     public T pop(){
-        T element = list.get(size()-1);
-        list.remove(element);
+        if(empty())throw new EmptyStackException();
+        T element = get(size()-1);
+        remove(element);
         return element;
     }
     public T push(T e){
-        list.add(e);
+        add(e);
         return e;
     }
     public int search(Object element){
-        if (list.indexOf(element)!=-1){
-            return 1+list.indexOf(element);
+        if (indexOf(element)!=-1){
+            return 1+indexOf(element);
         } else return -1;
     }
     
