@@ -135,9 +135,21 @@ public class DebtView extends javax.swing.JPanel {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("DEUDAS");
 
+        btnUndo.setEnabled(false);
         btnUndo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Arrows-Undo-icon.png"))); // NOI18N
+        btnUndo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUndoActionPerformed(evt);
+            }
+        });
 
+        btnRedo.setEnabled(false);
         btnRedo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Arrows-Redo-icon.png"))); // NOI18N
+        btnRedo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRedoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelPrincipalDLayout = new javax.swing.GroupLayout(panelPrincipalD);
         panelPrincipalD.setLayout(panelPrincipalDLayout);
@@ -497,11 +509,13 @@ public class DebtView extends javax.swing.JPanel {
     }//GEN-LAST:event_btnMoverAgregarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        this.btnUndo.setEnabled(true);
         debtController.MoveActionPerformed(evt);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        // TODO add your handling code here:
+        this.btnUndo.setEnabled(true);
+        debtController.MoveActionPerformed(evt);
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnMoverActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoverActualizarActionPerformed
@@ -509,7 +523,8 @@ public class DebtView extends javax.swing.JPanel {
     }//GEN-LAST:event_btnMoverActualizarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        debtController.DeleteActionPerformed(evt);
+        this.btnUndo.setEnabled(true);
+        debtController.MoveActionPerformed(evt);
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnRegresarActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActualizarActionPerformed
@@ -535,6 +550,14 @@ public class DebtView extends javax.swing.JPanel {
     private void txtFechaInicialAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaInicialAgregarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFechaInicialAgregarActionPerformed
+
+    private void btnUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUndoActionPerformed
+        debtController.MoveActionPerformed(evt);
+    }//GEN-LAST:event_btnUndoActionPerformed
+
+    private void btnRedoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRedoActionPerformed
+        debtController.MoveActionPerformed(evt);
+    }//GEN-LAST:event_btnRedoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

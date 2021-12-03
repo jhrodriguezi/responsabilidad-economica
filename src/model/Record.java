@@ -33,6 +33,8 @@ public class Record<T>{
         this.entidad = entidad;
     }
     
-    
-    
+    @Override
+    public String toString(){
+        return entidad.toString();
+    }
 }

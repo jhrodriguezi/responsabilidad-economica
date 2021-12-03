@@ -16,6 +16,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import structures.MyArrayList;
 import structures.MyLinkedList;
 import structures.QueueArray;
 
@@ -138,12 +139,15 @@ public class EventDAO {
             FileReader fr = new FileReader(f);
             JSONArray arrayJson= (JSONArray) jsonParser.parse(fr);
             JSONObject tempJson=new JSONObject();
+            MyArrayList<JSONObject> arrayDeleted = new MyArrayList();
             for(int i=0;i<arrayJson.size();i++){
                 tempJson=(JSONObject) arrayJson.get(i);
                 if(Integer.parseInt(tempJson.get("idDebt").toString())==idDebt){
-                    arrayJson.remove(tempJson);
+                    arrayDeleted.add(tempJson);
                 }
             }
+            for(int i=0; i<arrayDeleted.size();i++)
+                arrayJson.remove(arrayDeleted.get(i));
             FileWriter fw=new FileWriter(f);
             fw.write(arrayJson.toJSONString());
             f.setWritable(false);

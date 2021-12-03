@@ -16,7 +16,10 @@ import model.Category;
 import model.Debt;
 import structures.MyArrayList;
 import structures.MyLinkedList;
+import structures.StackArray;
+import structures.StackLinked;
 import view.DebtView;
+import model.Record;
 
 /**
  *
@@ -27,16 +30,21 @@ public class DebtController {
     private static DebtDAO debtDAO;
     private static CategoryDAO categoryDAO;
     private static MyLinkedList<Category> categories;
-    private Debt debt;
+    private Debt lastTableDebt;
+    private static StackArray<Record> undoStack;
+    private static StackLinked<Record> redoStack;
     private static MyArrayList<Debt> debts;
+    private static Record<Debt> r;
     
     public DebtController(DebtView debtView){
         this.debtView=debtView;
         this.debtDAO=new DebtDAO();
         this.categoryDAO=new CategoryDAO();
+        undoStack = new StackArray();
+        redoStack = new StackLinked();
     }
     
-    public void MoveActionPerformed(java.awt.event.ActionEvent evt) {                                           
+    public void MoveActionPerformed(java.awt.event.ActionEvent evt) {  
         if(evt.getSource()==debtView.getBtnMoverAgregar()){
             startComponentsAgregar();
             debtView.activarPanelAgregar();
@@ -48,13 +56,61 @@ public class DebtController {
         }else if(evt.getSource()==debtView.getBtnAgregar()){
             AgregarDebt();
             showDebt();
+        }else if(evt.getSource()==debtView.getBtnBorrar()){
+            DeleteDebt();
+            showDebt();
+        }else if(evt.getSource()==debtView.getBtnActualizar()){
+            UpdateDebt();
+            showDebt();
+        }else if(evt.getSource()==debtView.getBtnUndo()){
+            r=undoStack.pop();
+            if(undoStack.empty())debtView.getBtnUndo().setEnabled(false);
+            Debt d = (Debt) r.getEntidad();
+            switch(r.getMetodo()){
+                case "update" -> {
+                    
+                }
+                case "insert" -> {
+                    debtDAO.deleteByIdDebt(d.getId());
+                    redoStack.push(new Record<Debt>("delete",d)); 
+                }
+                case "delete" -> {
+                    debtDAO.insertDebt(d, true);
+                    redoStack.push(new Record<Debt>("insert",d));
+                }
+                default->{}
+            }
+            if(!redoStack.empty())debtView.getBtnRedo().setEnabled(true);
+            showDebt();
+        }else if(evt.getSource()==debtView.getBtnRedo()){
+            r=redoStack.pop();
+            if(redoStack.empty())debtView.getBtnRedo().setEnabled(false);
+            Debt d = (Debt) r.getEntidad();
+            switch(r.getMetodo()){
+                case "update" -> {
+                    
+                }
+                case "insert" -> {
+                    debtDAO.deleteByIdDebt(d.getId());
+                    undoStack.push(new Record<Debt>("delete",d));
+                    
+                }
+                case "delete" -> {
+                    debtDAO.insertDebt(d, true);
+                    undoStack.push(new Record<Debt>("insert",d));
+                }
+                default->{}
+            }
+            showDebt();
+            if(!undoStack.empty())debtView.getBtnUndo().setEnabled(true);
         }
+        //System.out.println("undo "+undoStack);
+        //System.out.println("redo "+redoStack);
     }
     
-    public void DeleteActionPerformed(java.awt.event.ActionEvent evt){
-        if(evt.getSource()==debtView.getBtnBorrar()){
-            
-        }
+    public void DeleteDebt(){
+        undoStack.push(new Record<Debt>("delete", new Debt(lastTableDebt)));
+        debtDAO.deleteByIdDebt(lastTableDebt.getId());
     }
     
     public static void showDebt(){
@@ -79,18 +135,8 @@ public class DebtController {
     
     public void TableMouseClicked(MouseEvent evt) {
         debtView.habilitarBotones();
-        /*
-        int row=clienteView.getCli_Table().getSelectedRow();
-        if(row!=-1 && clienteView.getCbxCli_acciones().getSelectedItem().equals("Actualizar cliente")){
-            clienteView.getTxtCli_id().setText(""+clienteView.getCli_Table().getValueAt(row,0));
-            clienteView.getTxtCli_docId().setText(""+clienteView.getCli_Table().getValueAt(row,1));
-            clienteView.getTxtCli_nombre().setText((String)clienteView.getCli_Table().getValueAt(row,2));
-            clienteView.getTxtCli_apellido().setText((String)clienteView.getCli_Table().getValueAt(row,3));
-            clienteView.getTxtCli_correo().setText((String)clienteView.getCli_Table().getValueAt(row,4));
-            clienteView.getTxtCli_telefono().setText((String)clienteView.getCli_Table().getValueAt(row,5));
-        }else if(row!=-1 && clienteView.getCbxCli_acciones().getSelectedItem().equals("Eliminar cliente")){
-            clienteView.getTxtCli_id().setText(""+clienteView.getCli_Table().getValueAt(row,0));
-        }*/
+        int row=debtView.getTableDebts().getSelectedRow();
+        lastTableDebt=debts.get(row);
     }
 
     public void startComponentsAgregar() {
@@ -102,11 +148,21 @@ public class DebtController {
     }
     
     public void startComponentsActualizar() {
+        DecimalFormat df = new DecimalFormat("#");
+        df.setMaximumFractionDigits(2);
         categories=categoryDAO.getAllCategory();
         debtView.getCbxCategoriaActualizar().removeAllItems();
         for(int i=0; i<categories.size();i++)
             debtView.getCbxCategoriaActualizar().addItem(categories.get(i).getName());
         debtView.getCbxCategoriaActualizar().repaint();
+        debtView.getCbxCategoriaActualizar().setSelectedIndex(lastTableDebt.getIdCategory());
+        debtView.getTxtDescripcionActualizar().setText(lastTableDebt.getDescription());
+        debtView.getTxtFechaInicialActualizar().setText(lastTableDebt.getStartDate());
+        debtView.getTxtNombreActualizar().setText(lastTableDebt.getName());
+        debtView.getTxtNumCuotasActualizar().setText(lastTableDebt.getNumQuotas()+"");
+        debtView.getTxtValorActualizar().setText(df.format(lastTableDebt.getMoneyToPaid())+"");
+        debtView.getCbxPeriodicidadActualizar().setSelectedItem(lastTableDebt.getPeriodicity());
+        debtView.getPanelActualizarD().repaint();
     }
 
     public void AgregarDebt() {
@@ -117,10 +173,23 @@ public class DebtController {
         String periodicidad = debtView.getCbxPeriodicidadAgregar().getSelectedItem().toString();
         int idCategory = categories.get(debtView.getCbxCategoriaAgregar().getSelectedIndex()).getId();
         String descripcion = debtView.getTxtDescripcionAgregar().getText();
-        debtDAO.insertDebt(new Debt(0,name,valor,fecha,cuotas,periodicidad,descripcion,idCategory,0));
+        Debt d= new Debt(0,name,valor,fecha,cuotas,periodicidad,descripcion,idCategory,0);
+        undoStack.push(new Record<Debt>("insert", d));
+        debtDAO.insertDebt(d, false);
         JOptionPane.showMessageDialog(debtView, "Deuda agregada exitosamente");
         debtView.activarPanelPrincipalD();
         debtView.cleanFieldsAgregar();
     }
     
+    public void UpdateDebt(){
+        String name = debtView.getTxtNombreActualizar().getText();
+        float valor = Float.parseFloat(debtView.getTxtValorActualizar().getText());
+        String fecha = debtView.getTxtFechaInicialActualizar().getText();
+        int cuotas = Integer.parseInt(debtView.getTxtNumCuotasActualizar().getText());
+        String periodicidad = debtView.getCbxPeriodicidadActualizar().getSelectedItem().toString();
+        int idCategory = categories.get(debtView.getCbxCategoriaActualizar().getSelectedIndex()).getId();
+        String descripcion = debtView.getTxtDescripcionActualizar().getText();
+        Debt temp=new Debt(lastTableDebt.getId(), name, valor, fecha, cuotas, periodicidad, descripcion, idCategory, lastTableDebt.getPercent());
+        debtDAO.updateDebt(temp);
+    }  
 }

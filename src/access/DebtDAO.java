@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import model.Debt;
 import model.Event;
 import org.json.simple.JSONArray;
@@ -25,7 +27,7 @@ public class DebtDAO {
         MyArrayList<Debt> arrayDebt = new MyArrayList();
         try{
             Object obj = jsonParser.parse(new FileReader(f));
-            JSONArray jsonArr=(JSONArray) obj;
+            JSONArray jsonArr=sortJson((JSONArray) obj);
             for(int i=0; i<jsonArr.size(); i++){
                 JSONObject debtJson =(JSONObject) jsonArr.get(i);
                 int category = Integer.parseInt(debtJson.get("idCategory").toString());
@@ -72,11 +74,21 @@ public class DebtDAO {
         return null;
     }
     
+    public JSONArray sortJson(JSONArray JSONa){
+        Collections.sort(JSONa,new Comparator<JSONObject>(){
+                 public int compare(JSONObject c1,JSONObject c2){
+                       int n = Integer.parseInt(c1.get("id").toString());
+                       int m = Integer.parseInt(c2.get("id").toString());
+                       return new Integer(n).compareTo(new Integer(m));
+                 }});
+        return JSONa;
+    }
+    
     public MyArrayList<Debt> getAllDebt(){
         MyArrayList<Debt> arrayDebt = new MyArrayList();
         try{
             FileReader fr = new FileReader(f);
-            JSONArray jsonArr=(JSONArray) jsonParser.parse(fr);
+            JSONArray jsonArr=sortJson((JSONArray) jsonParser.parse(fr));
             for(int i=0; i<jsonArr.size(); i++){
                 JSONObject debtJson=(JSONObject)jsonArr.get(i);
                 arrayDebt.add(
@@ -96,13 +108,18 @@ public class DebtDAO {
         return arrayDebt;
     }
     
-    public void insertDebt(Debt debt){
+    public void insertDebt(Debt debt, boolean flag){
         f.setWritable(true);
         try{
             FileReader fr = new FileReader(f);
             JSONArray arrayJson= (JSONArray) jsonParser.parse(fr);
             JSONObject debtJson=new JSONObject();
-            int id = getLastIndex();
+            int id;
+            if(flag)
+                id = debt.getId();
+            else
+                id = getLastIndex();
+            
             debtJson.put("id", id);
             debtJson.put("name",debt.getName());
             debtJson.put("moneyToPaid",debt.getMoneyToPaid());
@@ -272,8 +289,8 @@ public class DebtDAO {
         DAO.updateDebt(debt);
     }
     
-    public static void main(String[] args) {
-        new DebtDAO().insertDebt(new Debt(1,"Carro 4k",(float)100.00,"2021-11-29",5,"Mensual","Prueba",0,0));
+    /*public static void main(String[] args) {
+        new DebtDAO().insertDebt(new Debt(1,"Carro 4k",(float)100.00,"2021-11-29",5,"Mensual","Prueba",0,0), false);
         //new DebtDAO().insertDebt(new Debt(1,"PRUEBAA",(float)500.00,"2021-11-30",7,"Mensual","Prueba",0,0));
-    }
+    }*/
 }

@@ -27,6 +27,18 @@ public class Debt{
         this.percent=percent;
     }
     
+    public Debt(Debt debt){
+        this.id = debt.getId();
+        this.name = debt.getName();
+        this.moneyToPaid = debt.getMoneyToPaid();
+        this.startDate = debt.getStartDate();
+        this.numQuotas = debt.getNumQuotas();
+        this.periodicity=debt.getPeriodicity();
+        this.description = debt.getDescription();
+        this.idCategory = debt.getIdCategory();
+        this.percent=debt.getPercent();
+    }
+    
     public int getId() {
         return id;
     }
@@ -101,6 +113,6 @@ public class Debt{
     
     @Override
     public String toString(){
-        return ""+this.id+" "+this.name+" "+this.description+" "+this.startDate;
+        return ""+this.id+" "+this.name;
     }
 }
