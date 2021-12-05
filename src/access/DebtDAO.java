@@ -295,8 +295,8 @@ public class DebtDAO {
         DAO.updateDebt(debt);
     }
     
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         new DebtDAO().insertDebt(new Debt(DebtDAO.getLastIndex(),"Carro 4k",(float)100.00,"2021-11-29",5,"Mensual","Prueba",0,0), true);
         //new DebtDAO().insertDebt(new Debt(1,"PRUEBAA",(float)500.00,"2021-11-30",7,"Mensual","Prueba",0,0));
-    }
+    }*/
 }
