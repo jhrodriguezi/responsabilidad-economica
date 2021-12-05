@@ -307,6 +307,7 @@ public class Main extends javax.swing.JFrame {
 
     private void btnEventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEventosActionPerformed
         mainController.actionPerformed(evt);
+        EventController.refreshEvent();
         EventController.showEvent();
         EventController.startComponentsDeuda();
     }//GEN-LAST:event_btnEventosActionPerformed

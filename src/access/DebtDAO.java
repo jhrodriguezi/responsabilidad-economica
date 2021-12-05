@@ -108,6 +108,32 @@ public class DebtDAO {
         return arrayDebt;
     }
     
+    public MyArrayList<Debt> getAllDebtWithOut100Percent(){
+        MyArrayList<Debt> arrayDebt = new MyArrayList();
+        try{
+            FileReader fr = new FileReader(f);
+            JSONArray jsonArr=sortJson((JSONArray) jsonParser.parse(fr));
+            for(int i=0; i<jsonArr.size(); i++){
+                JSONObject debtJson=(JSONObject)jsonArr.get(i);
+                if(Integer.parseInt(debtJson.get("percent").toString())!=100){
+                    arrayDebt.add(
+                            new Debt(Integer.parseInt(debtJson.get("id").toString()),
+                            debtJson.get("name").toString(),
+                            Float.parseFloat(debtJson.get("moneyToPaid").toString()),
+                            debtJson.get("startDate").toString(),
+                            Integer.parseInt(debtJson.get("numQuotas").toString()),
+                            debtJson.get("periodicity").toString(),
+                            debtJson.get("description").toString(),
+                            Integer.parseInt(debtJson.get("idCategory").toString()),
+                            Integer.parseInt(debtJson.get("percent").toString())));
+                }
+            }
+        }catch(IOException | NumberFormatException | ParseException e){
+            System.out.println("message: "+e.getMessage());
+        }
+        return arrayDebt;
+    }
+    
     public void insertDebt(Debt debt, boolean flag){
         f.setWritable(true);
         try{

@@ -136,7 +136,7 @@ public class EventView extends javax.swing.JPanel {
     }//GEN-LAST:event_tableEventsMouseClicked
 
     private void btnConsultarPorDeudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarPorDeudaActionPerformed
-        // TODO add your handling code here:
+        eventController.ActionPerformed(evt);
     }//GEN-LAST:event_btnConsultarPorDeudaActionPerformed
 
 
