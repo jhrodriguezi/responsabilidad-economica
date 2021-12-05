@@ -505,34 +505,34 @@ public class DebtView extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMoverAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoverAgregarActionPerformed
-        debtController.MoveActionPerformed(evt);
+        debtController.ActionPerformed(evt);
     }//GEN-LAST:event_btnMoverAgregarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         this.btnUndo.setEnabled(true);
-        debtController.MoveActionPerformed(evt);
+        debtController.ActionPerformed(evt);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         this.btnUndo.setEnabled(true);
-        debtController.MoveActionPerformed(evt);
+        debtController.ActionPerformed(evt);
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnMoverActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoverActualizarActionPerformed
-        debtController.MoveActionPerformed(evt);
+        debtController.ActionPerformed(evt);
     }//GEN-LAST:event_btnMoverActualizarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
         this.btnUndo.setEnabled(true);
-        debtController.MoveActionPerformed(evt);
+        debtController.ActionPerformed(evt);
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnRegresarActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActualizarActionPerformed
-        debtController.MoveActionPerformed(evt);
+        debtController.ActionPerformed(evt);
     }//GEN-LAST:event_btnRegresarActualizarActionPerformed
 
     private void btnRegresarAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarAgregarActionPerformed
-        debtController.MoveActionPerformed(evt);
+        debtController.ActionPerformed(evt);
     }//GEN-LAST:event_btnRegresarAgregarActionPerformed
 
     private void tableDebtsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDebtsMouseClicked
@@ -552,11 +552,11 @@ public class DebtView extends javax.swing.JPanel {
     }//GEN-LAST:event_txtFechaInicialAgregarActionPerformed
 
     private void btnUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUndoActionPerformed
-        debtController.MoveActionPerformed(evt);
+        debtController.ActionPerformed(evt);
     }//GEN-LAST:event_btnUndoActionPerformed
 
     private void btnRedoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRedoActionPerformed
-        debtController.MoveActionPerformed(evt);
+        debtController.ActionPerformed(evt);
     }//GEN-LAST:event_btnRedoActionPerformed
 
 

@@ -16,6 +16,7 @@ import model.Event;
 import structures.MyArrayList;
 import structures.MyLinkedList;
 import structures.QueueArray;
+import structures.QueueLinked;
 import view.EventView;
 import view.Main;
 
@@ -88,9 +89,7 @@ public class EventController {
     }
     
     public static void deleteEvent(){
-        System.out.println(eventAsc);
         Event event = eventAsc.poll();
-        System.out.println(eventAsc);
         eventDAO.deleteEvent(event);
         Debt debt = new DebtDAO().getByIdDebt(event.getIdDebt());
         MainController.getMainView().getLblAvance().setText("Avance en la deuda asociada a este fraccionamiento: "+debt.getPercent()+"%");

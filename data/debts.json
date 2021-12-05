@@ -1,1 +1,1 @@
-[{"numQuotas":5,"moneyToPaid":100.0,"name":"Carro 4k","periodicity":"Mensual","description":"Prueba","id":0,"percent":0,"startDate":"2021-11-29","idCategory":0},{"numQuotas":2,"moneyToPaid":151161.0,"name":"asdas","periodicity":"Semanal","description":"asdafasdas","id":114,"percent":0,"startDate":"2020-5-5","idCategory":0}]
+[{"numQuotas":3,"moneyToPaid":50000.0,"name":"Prueba","periodicity":"Mensual","description":"PRUEBA NUMERO 1\n","id":0,"percent":100,"startDate":"2021-11-1","idCategory":0}]

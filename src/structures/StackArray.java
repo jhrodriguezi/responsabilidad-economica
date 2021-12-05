@@ -22,7 +22,7 @@ public class StackArray<T> extends MyArrayList<T>{
         add(e);
         return e;
     }
-    public int search(Object element){
+    public int search(T element){
         int index = 1+indexOf(element);
         return index;
     }

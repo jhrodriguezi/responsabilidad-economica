@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 
 /**
  *
@@ -47,6 +48,12 @@ public class CategoryView extends javax.swing.JPanel {
         btnActualizarCat = new javax.swing.JButton();
         btnUndo = new javax.swing.JButton();
         btnRedo = new javax.swing.JButton();
+        panelAgregarC = new javax.swing.JPanel();
+        lblCategory1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtNombreAgregar = new javax.swing.JTextField();
+        btnCancelarAC = new javax.swing.JButton();
+        btnAgregarC = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         setLayout(new java.awt.CardLayout());
@@ -107,7 +114,7 @@ public class CategoryView extends javax.swing.JPanel {
                     .addComponent(lblCategory, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelPrincipalCLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalCLayout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addComponent(btnAgregarCat)
@@ -144,10 +151,63 @@ public class CategoryView extends javax.swing.JPanel {
         );
 
         add(panelPrincipalC, "card2");
+
+        lblCategory1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblCategory1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCategory1.setText("CATEGORIA");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setText("Nombre");
+
+        btnCancelarAC.setText("Cancelar");
+
+        btnAgregarC.setText("Agregar");
+        btnAgregarC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarCActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelAgregarCLayout = new javax.swing.GroupLayout(panelAgregarC);
+        panelAgregarC.setLayout(panelAgregarCLayout);
+        panelAgregarCLayout.setHorizontalGroup(
+            panelAgregarCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblCategory1, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+            .addGroup(panelAgregarCLayout.createSequentialGroup()
+                .addGap(201, 201, 201)
+                .addGroup(panelAgregarCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelAgregarCLayout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel3))
+                    .addComponent(txtNombreAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAgregarCLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAgregarC, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(btnCancelarAC, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(176, 176, 176))
+        );
+        panelAgregarCLayout.setVerticalGroup(
+            panelAgregarCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAgregarCLayout.createSequentialGroup()
+                .addComponent(lblCategory1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(75, 75, 75)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNombreAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addGroup(panelAgregarCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelarAC, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAgregarC, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(57, 57, 57))
+        );
+
+        add(panelAgregarC, "card3");
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBorrarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarCatActionPerformed
-        categoryController.DeleteCategory(evt);
+        categoryController.ActionPerformed(evt);
     }//GEN-LAST:event_btnBorrarCatActionPerformed
 
     private void tableCategoriesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCategoriesMouseClicked
@@ -155,38 +215,50 @@ public class CategoryView extends javax.swing.JPanel {
     }//GEN-LAST:event_tableCategoriesMouseClicked
 
     private void btnAgregarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCatActionPerformed
-        // TODO add your handling code here:
+        categoryController.ActionPerformed(evt);
     }//GEN-LAST:event_btnAgregarCatActionPerformed
 
     private void btnActualizarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarCatActionPerformed
-        // TODO add your handling code here:
+        categoryController.ActionPerformed(evt);
     }//GEN-LAST:event_btnActualizarCatActionPerformed
+
+    private void btnAgregarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCActionPerformed
+        categoryController.ActionPerformed(evt);
+    }//GEN-LAST:event_btnAgregarCActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizarCat;
+    private javax.swing.JButton btnAgregarC;
     private javax.swing.JButton btnAgregarCat;
     private javax.swing.JButton btnBorrarCat;
+    private javax.swing.JButton btnCancelarAC;
     private javax.swing.JButton btnRedo;
     private javax.swing.JButton btnUndo;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCategory;
+    private javax.swing.JLabel lblCategory1;
+    private javax.swing.JPanel panelAgregarC;
     private javax.swing.JPanel panelPrincipalC;
     private javax.swing.JTable tableCategories;
+    private javax.swing.JTextField txtNombreAgregar;
     // End of variables declaration//GEN-END:variables
-    //METODO PARA LLENAR EL COMBOBOX
-    /*public void itemsComboTiposHab(ArrayList<String> listItems){
-        this.comboItems.removeAllItems();
-        this.comboItems.addItem("");
-        for(String l : listItems){
-            this.comboItems.addItem(l);
-        }
-        this.jPanel2.updateUI();
-    }*/
+    public void habilitarPanelAgregar(){
+        this.panelAgregarC.setVisible(true);
+        this.panelPrincipalC.setVisible(false);
+    }
+    
+    public void habilitarPanelCategoria(){
+        this.panelAgregarC.setVisible(false);
+        this.panelPrincipalC.setVisible(true);
+    }
     
     public void deshabilitarBotones(){
         this.btnBorrarCat.setEnabled(false);
         this.btnActualizarCat.setEnabled(false);
+        this.btnRedo.setEnabled(false);
+        this.btnUndo.setEnabled(true);
     }
     
     public void habilitarBotones(){
@@ -210,6 +282,14 @@ public class CategoryView extends javax.swing.JPanel {
         this.btnActualizarCat = btnActualizarCat;
     }
 
+    public JButton getBtnAgregarC() {
+        return btnAgregarC;
+    }
+
+    public void setBtnAgregarC(JButton btnAgregarC) {
+        this.btnAgregarC = btnAgregarC;
+    }
+
     public JButton getBtnAgregarCat() {
         return btnAgregarCat;
     }
@@ -224,6 +304,38 @@ public class CategoryView extends javax.swing.JPanel {
 
     public void setBtnBorrarCat(JButton btnBorrarCat) {
         this.btnBorrarCat = btnBorrarCat;
+    }
+
+    public JButton getBtnCancelarAC() {
+        return btnCancelarAC;
+    }
+
+    public void setBtnCancelarAC(JButton btnCancelarAC) {
+        this.btnCancelarAC = btnCancelarAC;
+    }
+
+    public JButton getBtnRedo() {
+        return btnRedo;
+    }
+
+    public void setBtnRedo(JButton btnRedo) {
+        this.btnRedo = btnRedo;
+    }
+
+    public JButton getBtnUndo() {
+        return btnUndo;
+    }
+
+    public void setBtnUndo(JButton btnUndo) {
+        this.btnUndo = btnUndo;
+    }
+
+    public JLabel getjLabel3() {
+        return jLabel3;
+    }
+
+    public void setjLabel3(JLabel jLabel3) {
+        this.jLabel3 = jLabel3;
     }
 
     public JScrollPane getjScrollPane1() {
@@ -242,6 +354,22 @@ public class CategoryView extends javax.swing.JPanel {
         this.lblCategory = lblCategory;
     }
 
+    public JLabel getLblCategory1() {
+        return lblCategory1;
+    }
+
+    public void setLblCategory1(JLabel lblCategory1) {
+        this.lblCategory1 = lblCategory1;
+    }
+
+    public JPanel getPanelAgregarC() {
+        return panelAgregarC;
+    }
+
+    public void setPanelAgregarC(JPanel panelAgregarC) {
+        this.panelAgregarC = panelAgregarC;
+    }
+
     public JPanel getPanelPrincipalC() {
         return panelPrincipalC;
     }
@@ -257,6 +385,19 @@ public class CategoryView extends javax.swing.JPanel {
     public void setTableCategories(JTable tableCategories) {
         this.tableCategories = tableCategories;
     }
+
+    public JTextField getTxtNombreAgregar() {
+        return txtNombreAgregar;
+    }
+
+    public void setTxtNombreAgregar(JTextField txtNombreAgregar) {
+        this.txtNombreAgregar = txtNombreAgregar;
+    }
+
+    public void cleanFieldsAgregar() {
+        this.txtNombreAgregar.setText("");
+    }
+
     
     
     

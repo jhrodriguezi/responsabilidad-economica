@@ -160,12 +160,11 @@ public class MyLinkedList<T> implements List<T>{
     @Override
     public int indexOf(Object o) {
         Node<T> n = initialNode.getNextNode();
-        int i = 0;
-        while(!n.getValue().equals(o) && n.getNextNode()!=endNode){
-            n=n.getNextNode();
-            i++;
-        }        
-        if(n.getValue().equals(o))return i;
+        for(int i=0; i<size(); i++){
+            if(n.getValue().equals(o))
+                return i;
+                
+        }
         return -1;
     }
 

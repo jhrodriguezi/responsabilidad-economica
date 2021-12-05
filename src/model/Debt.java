@@ -112,6 +112,17 @@ public class Debt{
     }
     
     @Override
+    public boolean equals(Object obj){
+        if(obj instanceof Debt){
+            Debt d = (Debt) obj;
+            if(d.getId()==getId()){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    @Override
     public String toString(){
         return ""+this.id+" "+this.name;
     }

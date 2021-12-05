@@ -10,23 +10,20 @@ public class StackLinked<T> extends MyLinkedList<T> {
     
     public T peek(){
         if(empty())throw new EmptyStackException();
-        T element = get(size()-1);
+        T element = get(0);
         return element;
     }
     public T pop(){
         if(empty())throw new EmptyStackException();
-        T element = get(size()-1);
-        remove(element);
+        T element = remove(0);
         return element;
     }
     public T push(T e){
-        add(e);
+        add(0,e);
         return e;
     }
     public int search(Object element){
-        if (indexOf(element)!=-1){
-            return 1+indexOf(element);
-        } else return -1;
+        return 1+indexOf(element);
     }
     
 }

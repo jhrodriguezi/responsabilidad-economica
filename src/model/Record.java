@@ -11,10 +11,12 @@ package model;
 public class Record<T>{
     private String metodo;
     private T entidad;
+    private int lastRow;
     
-    public Record(String metodo, T entidad){
+    public Record(String metodo, T entidad, int lastRow){
         this.metodo=metodo;
         this.entidad=entidad;
+        this.lastRow = lastRow;
     }
 
     public String getMetodo() {
@@ -31,6 +33,25 @@ public class Record<T>{
 
     public void setEntidad(T entidad) {
         this.entidad = entidad;
+    }
+
+    public int getLastRow() {
+        return lastRow;
+    }
+
+    public void setLastRow(int lastRow) {
+        this.lastRow = lastRow;
+    }
+    
+    @Override
+    public boolean equals(Object obj){
+        if(obj instanceof Record){
+            Record r = (Record) obj;
+            if(r.getMetodo().equals(getMetodo()) && r.getLastRow()==getLastRow() && r.getEntidad().equals(getEntidad())){
+                return true;
+            }
+        }
+        return false;
     }
     
     @Override

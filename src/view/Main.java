@@ -4,6 +4,7 @@
  */
 package view;
 
+import controller.CategoryController;
 import controller.DebtController;
 import controller.EventController;
 import controller.MainController;
@@ -312,10 +313,13 @@ public class Main extends javax.swing.JFrame {
 
     private void btnCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriasActionPerformed
         mainController.actionPerformed(evt);
+        CategoryController.refreshCategory();
+        CategoryController.showCategory();
     }//GEN-LAST:event_btnCategoriasActionPerformed
 
     private void btnDeudasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeudasActionPerformed
        mainController.actionPerformed(evt);
+       DebtController.refreshDebts();
        DebtController.showDebt();
     }//GEN-LAST:event_btnDeudasActionPerformed
 

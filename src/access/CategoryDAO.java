@@ -22,9 +22,9 @@ import structures.MyLinkedList;
  * @author DELL
  */
 public class CategoryDAO {
-    private final JSONParser jsonParser = new JSONParser();
-    private final File f = new File("data/categories.json");
-    private final File fIndex = new File("data/lastIndex.json");
+    private final static JSONParser jsonParser = new JSONParser();
+    private final static File f = new File("data/categories.json");
+    private final static File fIndex = new File("data/lastIndex.json");
     
     public MyLinkedList<Category> getAllCategory(){
         MyLinkedList<Category> linkCategory = new MyLinkedList();
@@ -35,7 +35,9 @@ public class CategoryDAO {
                 JSONObject cateJson=(JSONObject)jsonArr.get(i);
                 linkCategory.add(
                             new Category(Integer.parseInt(cateJson.get("id").toString()),
-                            cateJson.get("name").toString()));
+                            cateJson.get("name").toString(),
+                            Integer.parseInt(cateJson.get("countDebt").toString()),
+                            Integer.parseInt(cateJson.get("activeDebt").toString())));
             }
         }catch(IOException | NumberFormatException | ParseException e){
             System.out.println("message: "+e.getMessage());
@@ -43,7 +45,7 @@ public class CategoryDAO {
         return linkCategory;
     }
     
-    public Category getByIdCategory(int id){
+    public static Category getByIdCategory(int id){
         try{
             Object obj = jsonParser.parse(new FileReader(f));
             JSONArray jsonArr=(JSONArray) obj;
@@ -51,13 +53,28 @@ public class CategoryDAO {
                 JSONObject debtJson =(JSONObject) jsonArr.get(i);
                 if (Integer.parseInt(debtJson.get("id").toString())==id){
                     return( new Category(Integer.parseInt(debtJson.get("id").toString()),
-                            debtJson.get("name").toString()));
+                            debtJson.get("name").toString(),
+                            Integer.parseInt(debtJson.get("countDebt").toString()),
+                            Integer.parseInt(debtJson.get("activeDebt").toString())));
                 }
             }
         }catch(Exception e){
             System.out.println("message: "+e.getMessage());
         }
         return null;
+    }
+    
+    public static void incrementCount(int idCategory){
+        Category c = getByIdCategory(idCategory);
+        c.setActiveDebt(1+c.getActiveDebt());
+        c.setCountDebt(1+c.getCountDebt());
+        updateCategory(c);
+    }
+    
+    public static void decrementCount(int idCategory){
+        Category c = getByIdCategory(idCategory);
+        c.setActiveDebt(c.getActiveDebt()-1);
+        updateCategory(c);
     }
     
     public void insertCategory(Category category){
@@ -68,6 +85,8 @@ public class CategoryDAO {
             JSONObject cateJson=new JSONObject();
             cateJson.put("id", getLastIndex());
             cateJson.put("name",category.getName());
+            cateJson.put("countDebt", category.getCountDebt());
+            cateJson.put("activeDebt",category.getActiveDebt());
             arrayJson.add(cateJson);
             FileWriter fw=new FileWriter(f);
             fw.write(arrayJson.toJSONString());
@@ -94,7 +113,7 @@ public class CategoryDAO {
         }
     }
     
-    public int getLastIndex(){
+    public static int getLastIndex(){
         try{
             FileReader fr = new FileReader(fIndex);
             JSONObject indexJson= (JSONObject) jsonParser.parse(fr);
@@ -137,7 +156,7 @@ public class CategoryDAO {
     
     }
     
-    public void updateCategory(Category category){
+    public static void updateCategory(Category category){
         f.setWritable(true);
         try{
             FileReader fr = new FileReader(f);
@@ -147,6 +166,8 @@ public class CategoryDAO {
                 tempJson=(JSONObject) arrayJson.get(i);
                 if(Integer.parseInt(tempJson.get("id").toString())==category.getId()){
                     tempJson.replace("name",category.getName());
+                    tempJson.replace("countDebt",category.getCountDebt());
+                    tempJson.replace("activeDebt",category.getActiveDebt());
                     arrayJson.set(i, tempJson);
                     break;
                 }

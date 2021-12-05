@@ -11,9 +11,14 @@ package model;
 public class Category {
     private int id;
     private String name;
+    private int countDebt;
+    private int activeDebt;
     
-    public Category(int id, String name){
+    public Category(int id, String name, int countDebt, int activeDebt){
+        this.id=id;
         this.name=name;
+        this.countDebt=countDebt;
+        this.activeDebt=activeDebt;
     }
 
     public int getId() {
@@ -31,4 +36,22 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
+
+    public int getCountDebt() {
+        return countDebt;
+    }
+
+    public void setCountDebt(int countDebt) {
+        this.countDebt = countDebt;
+    }
+
+    public int getActiveDebt() {
+        return activeDebt;
+    }
+
+    public void setActiveDebt(int activeDebt) {
+        this.activeDebt = activeDebt;
+    }
+    
+    
 }

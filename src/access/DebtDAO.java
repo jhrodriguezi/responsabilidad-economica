@@ -19,9 +19,9 @@ import org.json.simple.parser.ParseException;
 import structures.MyArrayList;
 
 public class DebtDAO {
-    private final JSONParser jsonParser = new JSONParser();
-    private final File f = new File("data/debts.json");
-    private final File fIndex = new File("data/lastIndex.json");
+    private static final JSONParser jsonParser = new JSONParser();
+    private static final File f = new File("data/debts.json");
+    private static final File fIndex = new File("data/lastIndex.json");
     
     public MyArrayList<Debt> getByCategoryDebt(int idCategory){
         MyArrayList<Debt> arrayDebt = new MyArrayList();
@@ -129,6 +129,7 @@ public class DebtDAO {
             debtJson.put("description",debt.getDescription());
             debtJson.put("idCategory",debt.getIdCategory());
             debtJson.put("percent",debt.getPercent());
+            CategoryDAO.incrementCount(debt.getIdCategory());
             debt.setId(id);
             calculateEvents(debt);
             arrayJson.add(debtJson);
@@ -200,7 +201,7 @@ public class DebtDAO {
         }
     }
     
-    public int getLastIndex(){
+    public static int getLastIndex(){
         try{
             FileReader fr = new FileReader(fIndex);
             JSONObject indexJson= (JSONObject) jsonParser.parse(fr);
@@ -223,6 +224,7 @@ public class DebtDAO {
                     break;
                 }
             }
+            CategoryDAO.decrementCount(Integer.parseInt(tempJson.get("idCategory").toString()));
             new EventDAO().deleteAllByIdDebtEvent(id);
             arrayJson.remove(tempJson);
             FileWriter fw=new FileWriter(f);
@@ -254,6 +256,10 @@ public class DebtDAO {
             FileReader fr = new FileReader(f);
             JSONArray arrayJson= (JSONArray) jsonParser.parse(fr);
             JSONObject tempJson=new JSONObject();
+            if(debt.getPercent()==0){
+                new EventDAO().deleteAllByIdDebtEvent(debt.getId());
+                calculateEvents(debt);
+            }
             for(int i=0;i<arrayJson.size();i++){
                 tempJson=(JSONObject) arrayJson.get(i);
                 if(Integer.parseInt(tempJson.get("id").toString())==debt.getId()){
@@ -289,8 +295,8 @@ public class DebtDAO {
         DAO.updateDebt(debt);
     }
     
-    /*public static void main(String[] args) {
-        new DebtDAO().insertDebt(new Debt(1,"Carro 4k",(float)100.00,"2021-11-29",5,"Mensual","Prueba",0,0), false);
+    public static void main(String[] args) {
+        new DebtDAO().insertDebt(new Debt(DebtDAO.getLastIndex(),"Carro 4k",(float)100.00,"2021-11-29",5,"Mensual","Prueba",0,0), true);
         //new DebtDAO().insertDebt(new Debt(1,"PRUEBAA",(float)500.00,"2021-11-30",7,"Mensual","Prueba",0,0));
-    }*/
+    }
 }

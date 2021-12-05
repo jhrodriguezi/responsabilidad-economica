@@ -6,10 +6,9 @@ package controller;
 
 import access.CategoryDAO;
 import access.DebtDAO;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.Scanner;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Category;
@@ -30,37 +29,42 @@ public class DebtController {
     private static DebtDAO debtDAO;
     private static CategoryDAO categoryDAO;
     private static MyLinkedList<Category> categories;
+
+
     private Debt lastTableDebt;
     private static StackArray<Record> undoStack;
     private static StackLinked<Record> redoStack;
     private static MyArrayList<Debt> debts;
     private static Record<Debt> r;
+    private static int rowSelected;
     
     public DebtController(DebtView debtView){
         this.debtView=debtView;
-        this.debtDAO=new DebtDAO();
-        this.categoryDAO=new CategoryDAO();
+        debtDAO=new DebtDAO();
+        categoryDAO=new CategoryDAO();
+        categories=categoryDAO.getAllCategory();
+        debts=debtDAO.getAllDebt();
         undoStack = new StackArray();
         redoStack = new StackLinked();
     }
     
-    public void MoveActionPerformed(java.awt.event.ActionEvent evt) {  
+    public void ActionPerformed(java.awt.event.ActionEvent evt) {  
         if(evt.getSource()==debtView.getBtnMoverAgregar()){
-            startComponentsAgregar();
+            startComponentsInsert();
             debtView.activarPanelAgregar();
         }else if(evt.getSource()==debtView.getBtnMoverActualizar()){
-            startComponentsActualizar();
+            startComponentsUpdate();
             debtView.activarPanelActualizar();
         }else if(evt.getSource()==debtView.getBtnRegresarActualizar() || evt.getSource()==debtView.getBtnRegresarAgregar()){
             debtView.activarPanelPrincipalD();
         }else if(evt.getSource()==debtView.getBtnAgregar()){
-            AgregarDebt();
+            //insertDebt();
             showDebt();
         }else if(evt.getSource()==debtView.getBtnBorrar()){
             DeleteDebt();
             showDebt();
         }else if(evt.getSource()==debtView.getBtnActualizar()){
-            UpdateDebt();
+            updateDebt();
             showDebt();
         }else if(evt.getSource()==debtView.getBtnUndo()){
             r=undoStack.pop();
@@ -72,16 +76,21 @@ public class DebtController {
                 }
                 case "insert" -> {
                     debtDAO.deleteByIdDebt(d.getId());
-                    redoStack.push(new Record<Debt>("delete",d)); 
+                    if(redoStack.search(new Record<Debt>("delete",d, r.getLastRow()))==0)
+                        redoStack.push(new Record<Debt>("delete",d, r.getLastRow())); 
+                    debts.remove(r.getLastRow());
                 }
                 case "delete" -> {
                     debtDAO.insertDebt(d, true);
-                    redoStack.push(new Record<Debt>("insert",d));
+                    if(redoStack.search(new Record<Debt>("insert",d,r.getLastRow()))==0)
+                        redoStack.push(new Record<Debt>("insert",d,r.getLastRow()));
+                    debts.add(r.getLastRow(), d);
                 }
                 default->{}
             }
             if(!redoStack.empty())debtView.getBtnRedo().setEnabled(true);
             showDebt();
+            CategoryController.refreshCategory();
         }else if(evt.getSource()==debtView.getBtnRedo()){
             r=redoStack.pop();
             if(redoStack.empty())debtView.getBtnRedo().setEnabled(false);
@@ -92,25 +101,41 @@ public class DebtController {
                 }
                 case "insert" -> {
                     debtDAO.deleteByIdDebt(d.getId());
-                    undoStack.push(new Record<Debt>("delete",d));
+                    if(undoStack.search(new Record<Debt>("delete",d, r.getLastRow()))==0)
+                        undoStack.push(new Record<Debt>("delete",d, r.getLastRow()));
+                    debts.remove(r.getLastRow());
                     
                 }
                 case "delete" -> {
                     debtDAO.insertDebt(d, true);
-                    undoStack.push(new Record<Debt>("insert",d));
+                    if(undoStack.search(new Record<Debt>("insert",d, r.getLastRow()))==0)
+                        undoStack.push(new Record<Debt>("insert",d, r.getLastRow()));
+                    debts.add(r.getLastRow(), d);
                 }
                 default->{}
             }
             showDebt();
             if(!undoStack.empty())debtView.getBtnUndo().setEnabled(true);
+            CategoryController.refreshCategory();
         }
         //System.out.println("undo "+undoStack);
         //System.out.println("redo "+redoStack);
     }
     
     public void DeleteDebt(){
-        undoStack.push(new Record<Debt>("delete", new Debt(lastTableDebt)));
+        Debt d = new Debt(lastTableDebt);
+        undoStack.push(new Record<Debt>("delete", d, rowSelected));
+        emptyRedoStack();
+        debts.remove(rowSelected);
         debtDAO.deleteByIdDebt(lastTableDebt.getId());
+        CategoryController.refreshCategory();
+    }
+    
+    public void emptyRedoStack(){
+        while(!redoStack.empty()){
+            redoStack.pop();
+        }
+        debtView.getBtnRedo().setEnabled(false);
     }
     
     public static void showDebt(){
@@ -118,7 +143,6 @@ public class DebtController {
         debtView.getTableDebts().setModel(new DefaultTableModel(c,0));
         DefaultTableModel tb=(DefaultTableModel)debtView.getTableDebts().getModel();
         Object[] row=new Object[6];
-        debts=debtDAO.getAllDebt();
         DecimalFormat df = new DecimalFormat("#");
         df.setMaximumFractionDigits(2);
         for(int i=0; i<debts.size();i++){
@@ -133,13 +157,22 @@ public class DebtController {
         debtView.getTableDebts().setModel(tb);
     }
     
+    public static void refreshDebts() {
+        debts=debtDAO.getAllDebt();
+    }
+    
     public void TableMouseClicked(MouseEvent evt) {
-        debtView.habilitarBotones();
-        int row=debtView.getTableDebts().getSelectedRow();
-        lastTableDebt=debts.get(row);
+        rowSelected=debtView.getTableDebts().getSelectedRow();
+        lastTableDebt=debts.get(rowSelected);
+        if(Integer.parseInt(debtView.getTableDebts().getValueAt(rowSelected,5).toString())==100){
+            debtView.deshabilitarBotones();
+        }else{
+            debtView.habilitarBotones();        
+        }
+        
     }
 
-    public void startComponentsAgregar() {
+    public void startComponentsInsert() {
         categories=categoryDAO.getAllCategory();
         debtView.getCbxCategoriaAgregar().removeAllItems();
         for(int i=0; i<categories.size();i++)
@@ -147,7 +180,7 @@ public class DebtController {
         debtView.getCbxCategoriaAgregar().repaint();
     }
     
-    public void startComponentsActualizar() {
+    public void startComponentsUpdate() {
         DecimalFormat df = new DecimalFormat("#");
         df.setMaximumFractionDigits(2);
         categories=categoryDAO.getAllCategory();
@@ -165,7 +198,7 @@ public class DebtController {
         debtView.getPanelActualizarD().repaint();
     }
 
-    public void AgregarDebt() {
+    public void insertDebt() {
         String name = debtView.getTxtNombreAgregar().getText();
         float valor = Float.parseFloat(debtView.getTxtValorAgregar().getText());
         String fecha = debtView.getTxtFechaInicialAgregar().getText();
@@ -173,15 +206,18 @@ public class DebtController {
         String periodicidad = debtView.getCbxPeriodicidadAgregar().getSelectedItem().toString();
         int idCategory = categories.get(debtView.getCbxCategoriaAgregar().getSelectedIndex()).getId();
         String descripcion = debtView.getTxtDescripcionAgregar().getText();
-        Debt d= new Debt(0,name,valor,fecha,cuotas,periodicidad,descripcion,idCategory,0);
-        undoStack.push(new Record<Debt>("insert", d));
-        debtDAO.insertDebt(d, false);
+        Debt d= new Debt(DebtDAO.getLastIndex(),name,valor,fecha,cuotas,periodicidad,descripcion,idCategory,0);
+        undoStack.push(new Record<Debt>("insert", d, debts.size()));
+        emptyRedoStack();
+        debtDAO.insertDebt(d, true);
+        debts.add(d);
         JOptionPane.showMessageDialog(debtView, "Deuda agregada exitosamente");
         debtView.activarPanelPrincipalD();
         debtView.cleanFieldsAgregar();
+        CategoryController.refreshCategory();
     }
     
-    public void UpdateDebt(){
+    public void updateDebt(){
         String name = debtView.getTxtNombreActualizar().getText();
         float valor = Float.parseFloat(debtView.getTxtValorActualizar().getText());
         String fecha = debtView.getTxtFechaInicialActualizar().getText();
@@ -191,5 +227,8 @@ public class DebtController {
         String descripcion = debtView.getTxtDescripcionActualizar().getText();
         Debt temp=new Debt(lastTableDebt.getId(), name, valor, fecha, cuotas, periodicidad, descripcion, idCategory, lastTableDebt.getPercent());
         debtDAO.updateDebt(temp);
+        debts.set(rowSelected, temp);
+        JOptionPane.showMessageDialog(debtView, "Deuda agregada exitosamente");
+        debtView.activarPanelPrincipalD();
     }  
 }
