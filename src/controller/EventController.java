@@ -40,8 +40,19 @@ public class EventController {
         debtDAO=new DebtDAO();
     }
     
-    public static void showEvent(){
+    public void ActionPerformed(java.awt.event.ActionEvent evt) {  
+        if(evt.getSource()==eventView.getBtnConsultarPorDeuda()){
+            events=eventDAO.getByDebtEvent(debts.get(eventView.getCbxDeudas().getSelectedIndex()));
+            showEvent();
+        }
+    
+    }
+    
+    public static void refreshEvent(){
         events=eventDAO.getAllEvent();
+    }
+    
+    public static void showEvent(){
         String[] c={"Valor a pagar","Fecha","Numero de cuota"};
         eventView.getTableEvents().setModel(new DefaultTableModel(c,0));
         DefaultTableModel tb=(DefaultTableModel)eventView.getTableEvents().getModel();
@@ -80,7 +91,7 @@ public class EventController {
     }
     
     public static void startComponentsDeuda() {
-        debts=debtDAO.getAllDebt();
+        debts=debtDAO.getAllDebtWithOut100Percent();
         eventView.getCbxDeudas().removeAllItems();
         for(int i=0; i<debts.size();i++)
             if(debts.get(i).getPercent()!=100)
