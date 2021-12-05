@@ -16,7 +16,7 @@ import model.Event;
 import structures.MyArrayList;
 import structures.MyLinkedList;
 import structures.QueueArray;
-import structures.QueueLinked;
+import structures.QueueArrayCircular;
 import view.EventView;
 import view.Main;
 
