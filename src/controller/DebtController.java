@@ -58,7 +58,7 @@ public class DebtController {
         }else if(evt.getSource()==debtView.getBtnRegresarActualizar() || evt.getSource()==debtView.getBtnRegresarAgregar()){
             debtView.activarPanelPrincipalD();
         }else if(evt.getSource()==debtView.getBtnAgregar()){
-            //insertDebt();
+            insertDebt();
             showDebt();
         }else if(evt.getSource()==debtView.getBtnBorrar()){
             DeleteDebt();
@@ -228,7 +228,7 @@ public class DebtController {
         Debt temp=new Debt(lastTableDebt.getId(), name, valor, fecha, cuotas, periodicidad, descripcion, idCategory, lastTableDebt.getPercent());
         debtDAO.updateDebt(temp);
         debts.set(rowSelected, temp);
-        JOptionPane.showMessageDialog(debtView, "Deuda agregada exitosamente");
+        JOptionPane.showMessageDialog(debtView, "Deuda actualizada exitosamente");
         debtView.activarPanelPrincipalD();
     }  
 }
