@@ -160,6 +160,11 @@ public class CategoryView extends javax.swing.JPanel {
         jLabel3.setText("Nombre");
 
         btnCancelarAC.setText("Cancelar");
+        btnCancelarAC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarACActionPerformed(evt);
+            }
+        });
 
         btnAgregarC.setText("Agregar");
         btnAgregarC.addActionListener(new java.awt.event.ActionListener() {
@@ -173,34 +178,35 @@ public class CategoryView extends javax.swing.JPanel {
         panelAgregarCLayout.setHorizontalGroup(
             panelAgregarCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblCategory1, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
-            .addGroup(panelAgregarCLayout.createSequentialGroup()
-                .addGap(201, 201, 201)
-                .addGroup(panelAgregarCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelAgregarCLayout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jLabel3))
-                    .addComponent(txtNombreAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAgregarCLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAgregarC, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(btnCancelarAC, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(176, 176, 176))
+                .addGroup(panelAgregarCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAgregarCLayout.createSequentialGroup()
+                        .addComponent(btnAgregarC, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(btnCancelarAC, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(167, 167, 167))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAgregarCLayout.createSequentialGroup()
+                        .addGroup(panelAgregarCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelAgregarCLayout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addComponent(jLabel3))
+                            .addComponent(txtNombreAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(206, 206, 206))))
         );
         panelAgregarCLayout.setVerticalGroup(
             panelAgregarCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAgregarCLayout.createSequentialGroup()
                 .addComponent(lblCategory1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(75, 75, 75)
+                .addGap(56, 56, 56)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNombreAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addGap(68, 68, 68)
                 .addGroup(panelAgregarCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelarAC, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarC, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(57, 57, 57))
+                    .addComponent(btnAgregarC, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelarAC, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         add(panelAgregarC, "card3");
@@ -225,6 +231,10 @@ public class CategoryView extends javax.swing.JPanel {
     private void btnAgregarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCActionPerformed
         categoryController.ActionPerformed(evt);
     }//GEN-LAST:event_btnAgregarCActionPerformed
+
+    private void btnCancelarACActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarACActionPerformed
+        categoryController.ActionPerformed(evt);
+    }//GEN-LAST:event_btnCancelarACActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -258,7 +268,7 @@ public class CategoryView extends javax.swing.JPanel {
         this.btnBorrarCat.setEnabled(false);
         this.btnActualizarCat.setEnabled(false);
         this.btnRedo.setEnabled(false);
-        this.btnUndo.setEnabled(true);
+        this.btnUndo.setEnabled(false);
     }
     
     public void habilitarBotones(){

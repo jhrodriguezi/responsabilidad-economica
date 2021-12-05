@@ -37,6 +37,8 @@ public class CategoryController {
             insertCategory();
             categoryView.habilitarPanelCategoria();
             showCategory();
+        }else if(evt.getSource()==categoryView.getBtnCancelarAC()){
+            categoryView.habilitarPanelCategoria();
         }
     }
     
