@@ -4,10 +4,15 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ResponsabilidadEconomica/src/view/Main.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ResponsabilidadEconomica/src/view/DebtView.java</file>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ResponsabilidadEconomica/src/controller/EventController.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ResponsabilidadEconomica/src/controller/MainController.java</file>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ResponsabilidadEconomica/src/access/EventDAO.java</file>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ResponsabilidadEconomica/src/view/CategoryView.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ResponsabilidadEconomica/src/controller/CategoryController.java</file>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ResponsabilidadEconomica/src/controller/DebtController.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ResponsabilidadEconomica/src/access/CategoryDAO.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ResponsabilidadEconomica/src/access/DebtDAO.java</file>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ResponsabilidadEconomica/src/view/EventView.java</file>
         </group>
     </open-files>

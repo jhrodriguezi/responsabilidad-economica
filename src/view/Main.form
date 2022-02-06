@@ -88,7 +88,7 @@
                           <Component id="btnEventos" pref="137" max="32767" attributes="0"/>
                           <Component id="btnCategorias" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="77" max="32767" attributes="0"/>
+                      <EmptySpace pref="79" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

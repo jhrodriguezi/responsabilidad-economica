@@ -80,4 +80,8 @@ public class CategoryController {
     public void TableMouseClicked(MouseEvent evt) {
         categoryView.habilitarBotones();
     }
+    
+    public static void deshabilitarBotonesTablaCategory(){
+        categoryView.deshabilitarBotones();
+    }
 }
