@@ -169,7 +169,10 @@ public class DebtController {
         }else{
             debtView.habilitarBotones();        
         }
-        
+    }
+    
+    public static void deshabilitarBotonesTablaDebt(){
+        debtView.deshabilitarBotones();
     }
 
     public void startComponentsInsert() {
@@ -226,6 +229,7 @@ public class DebtController {
         int idCategory = categories.get(debtView.getCbxCategoriaActualizar().getSelectedIndex()).getId();
         String descripcion = debtView.getTxtDescripcionActualizar().getText();
         Debt temp=new Debt(lastTableDebt.getId(), name, valor, fecha, cuotas, periodicidad, descripcion, idCategory, lastTableDebt.getPercent());
+        undoStack.push(new Record<Debt>("update", lastTableDebt, rowSelected));
         debtDAO.updateDebt(temp);
         debts.set(rowSelected, temp);
         JOptionPane.showMessageDialog(debtView, "Deuda actualizada exitosamente");

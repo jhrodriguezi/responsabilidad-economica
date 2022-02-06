@@ -37,6 +37,8 @@ public class CategoryController {
             insertCategory();
             categoryView.habilitarPanelCategoria();
             showCategory();
+        }else if(evt.getSource()==categoryView.getBtnCancelarAC()){
+            categoryView.habilitarPanelCategoria();
         }
     }
     
@@ -77,5 +79,9 @@ public class CategoryController {
 
     public void TableMouseClicked(MouseEvent evt) {
         categoryView.habilitarBotones();
+    }
+    
+    public static void deshabilitarBotonesTablaCategory(){
+        categoryView.deshabilitarBotones();
     }
 }

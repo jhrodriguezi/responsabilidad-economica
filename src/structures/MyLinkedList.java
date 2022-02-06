@@ -163,6 +163,7 @@ public class MyLinkedList<T> implements List<T>{
         for(int i=0; i<size(); i++){
             if(n.getValue().equals(o))
                 return i;
+            n=n.getNextNode();
                 
         }
         return -1;

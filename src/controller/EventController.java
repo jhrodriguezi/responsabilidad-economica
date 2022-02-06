@@ -117,4 +117,8 @@ public class EventController {
     public void TableMouseClicked(MouseEvent evt) {
         eventView.habilitarBotones();
     }
+    
+    public static void deshabilitarBotonesTablaEvent(){
+        eventView.deshabilitarBotones();
+    }
 }
