@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package structures;
 
 import java.util.Collection;
@@ -9,10 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-/**
- *
- * @author DELL
- */
+
 public class MyLinkedList<T> implements List<T>{
     private Node<T> initialNode;
     private Node<T> endNode;
@@ -73,6 +66,20 @@ public class MyLinkedList<T> implements List<T>{
         return false;
     }
 
+    public T removeElement(T o) {
+        Node<T> n = initialNode.getNextNode();
+        for(int i=0; i<size(); i++){
+            if(n.getValue().equals(o)){
+                n.getPreviousNode().setNextNode(n.getNextNode());
+                n.getNextNode().setPreviousNode(n.getPreviousNode());
+                size--;
+                return n.getValue();
+            }
+            n=n.getNextNode();
+        }
+        return null;
+    }
+
     @Override
     public boolean containsAll(Collection<?> c) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -98,10 +105,9 @@ public class MyLinkedList<T> implements List<T>{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
     public void clear() {
-        initialNode=new Node();
-        endNode=new Node();
+        initialNode=new Node<T>();
+        endNode=new Node<T>();
         initialNode.setNextNode(endNode);
         endNode.setPreviousNode(initialNode);
         size=0;
@@ -138,7 +144,7 @@ public class MyLinkedList<T> implements List<T>{
     public void add(int index, T element) {
         if(index!=size())checkIndex(index);
         Node<T> n = getNode(index);
-        Node<T> newNode = new Node();
+        Node<T> newNode = new Node<T>();
         newNode.setValue(element);
         newNode.setNextNode(n);
         newNode.setPreviousNode(n.getPreviousNode());
@@ -218,12 +224,19 @@ public class MyLinkedList<T> implements List<T>{
         message+="]";
         return message;
     }
+
+    public static void main(String[] args) {
+        MyLinkedList<Integer> n = new MyLinkedList<Integer>();
+        for(int i = 0; i < 100; i++)
+            n.add(i);
+        System.out.println(n);
+    }
 }
 
 class Node<T>{
     private T value;
-    private Node nextNode;
-    private Node previousNode;
+    private Node<T> nextNode;
+    private Node<T> previousNode;
     
     public Node(){
         this.value=null;
@@ -239,19 +252,19 @@ class Node<T>{
         this.value = value;
     }
 
-    public Node getNextNode() {
+    public Node<T> getNextNode() {
         return nextNode;
     }
 
-    public void setNextNode(Node nextNode) {
+    public void setNextNode(Node<T> nextNode) {
         this.nextNode = nextNode;
     }
 
-    public Node getPreviousNode() {
+    public Node<T> getPreviousNode() {
         return previousNode;
     }
 
-    public void setPreviousNode(Node previousNode) {
+    public void setPreviousNode(Node<T> previousNode) {
         this.previousNode = previousNode;
     }
     

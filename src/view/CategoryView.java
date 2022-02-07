@@ -48,12 +48,28 @@ public class CategoryView extends javax.swing.JPanel {
         btnActualizarCat = new javax.swing.JButton();
         btnUndo = new javax.swing.JButton();
         btnRedo = new javax.swing.JButton();
+        btnVerDeudas = new javax.swing.JButton();
         panelAgregarC = new javax.swing.JPanel();
         lblCategory1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtNombreAgregar = new javax.swing.JTextField();
         btnCancelarAC = new javax.swing.JButton();
         btnAgregarC = new javax.swing.JButton();
+        panelVerDeudas = new javax.swing.JPanel();
+        lblCategory2 = new javax.swing.JLabel();
+        btnCerrarVerDeudas = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableVerDebts = new javax.swing.JTable(){
+            public boolean isCellEditable(int i, int j){
+                return false;
+            }
+        };
+        panelActualizarC = new javax.swing.JPanel();
+        lblCategory3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txtNombreActualizar = new javax.swing.JTextField();
+        btnCancelarUC = new javax.swing.JButton();
+        btnActualizarC = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         setLayout(new java.awt.CardLayout());
@@ -105,6 +121,13 @@ public class CategoryView extends javax.swing.JPanel {
 
         btnRedo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Arrows-Redo-icon.png"))); // NOI18N
 
+        btnVerDeudas.setText("Ver deudas asociadas");
+        btnVerDeudas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerDeudasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelPrincipalCLayout = new javax.swing.GroupLayout(panelPrincipalC);
         panelPrincipalC.setLayout(panelPrincipalCLayout);
         panelPrincipalCLayout.setHorizontalGroup(
@@ -115,14 +138,17 @@ public class CategoryView extends javax.swing.JPanel {
                     .addGroup(panelPrincipalCLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalCLayout.createSequentialGroup()
+                    .addGroup(panelPrincipalCLayout.createSequentialGroup()
                         .addGap(34, 34, 34)
-                        .addComponent(btnAgregarCat)
-                        .addGap(29, 29, 29)
-                        .addComponent(btnActualizarCat)
-                        .addGap(29, 29, 29)
-                        .addComponent(btnBorrarCat)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(panelPrincipalCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(panelPrincipalCLayout.createSequentialGroup()
+                                .addComponent(btnAgregarCat)
+                                .addGap(29, 29, 29)
+                                .addComponent(btnActualizarCat)
+                                .addGap(29, 29, 29)
+                                .addComponent(btnBorrarCat))
+                            .addComponent(btnVerDeudas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                         .addComponent(btnUndo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnRedo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -145,7 +171,9 @@ public class CategoryView extends javax.swing.JPanel {
                         .addGroup(panelPrincipalCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnUndo)
                             .addComponent(btnRedo))))
-                .addGap(44, 44, 44)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnVerDeudas)
+                .addGap(21, 21, 21)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -210,6 +238,123 @@ public class CategoryView extends javax.swing.JPanel {
         );
 
         add(panelAgregarC, "card3");
+
+        panelVerDeudas.setPreferredSize(new java.awt.Dimension(552, 321));
+
+        lblCategory2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblCategory2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCategory2.setText("Deudas");
+
+        btnCerrarVerDeudas.setText("Cerrar");
+        btnCerrarVerDeudas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarVerDeudasActionPerformed(evt);
+            }
+        });
+
+        tableVerDebts.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tableVerDebts.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableVerDebtsMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tableVerDebts);
+
+        javax.swing.GroupLayout panelVerDeudasLayout = new javax.swing.GroupLayout(panelVerDeudas);
+        panelVerDeudas.setLayout(panelVerDeudasLayout);
+        panelVerDeudasLayout.setHorizontalGroup(
+            panelVerDeudasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblCategory2, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+            .addGroup(panelVerDeudasLayout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVerDeudasLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCerrarVerDeudas, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(231, 231, 231))
+        );
+        panelVerDeudasLayout.setVerticalGroup(
+            panelVerDeudasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelVerDeudasLayout.createSequentialGroup()
+                .addComponent(lblCategory2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(btnCerrarVerDeudas, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47))
+        );
+
+        add(panelVerDeudas, "card3");
+
+        lblCategory3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblCategory3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCategory3.setText("CATEGORIA");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setText("Nombre");
+
+        btnCancelarUC.setText("Cancelar");
+        btnCancelarUC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarUCActionPerformed(evt);
+            }
+        });
+
+        btnActualizarC.setText("Actualizar");
+        btnActualizarC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarCActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelActualizarCLayout = new javax.swing.GroupLayout(panelActualizarC);
+        panelActualizarC.setLayout(panelActualizarCLayout);
+        panelActualizarCLayout.setHorizontalGroup(
+            panelActualizarCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblCategory3, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelActualizarCLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelActualizarCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelActualizarCLayout.createSequentialGroup()
+                        .addComponent(btnActualizarC, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(btnCancelarUC, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(167, 167, 167))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelActualizarCLayout.createSequentialGroup()
+                        .addGroup(panelActualizarCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelActualizarCLayout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addComponent(jLabel4))
+                            .addComponent(txtNombreActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(206, 206, 206))))
+        );
+        panelActualizarCLayout.setVerticalGroup(
+            panelActualizarCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelActualizarCLayout.createSequentialGroup()
+                .addComponent(lblCategory3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNombreActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68)
+                .addGroup(panelActualizarCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnActualizarC, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelarUC, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(71, Short.MAX_VALUE))
+        );
+
+        add(panelActualizarC, "card3");
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBorrarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarCatActionPerformed
@@ -236,32 +381,82 @@ public class CategoryView extends javax.swing.JPanel {
         categoryController.ActionPerformed(evt);
     }//GEN-LAST:event_btnCancelarACActionPerformed
 
+    private void btnVerDeudasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerDeudasActionPerformed
+        categoryController.ActionPerformed(evt);
+    }//GEN-LAST:event_btnVerDeudasActionPerformed
+
+    private void btnCerrarVerDeudasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarVerDeudasActionPerformed
+        categoryController.ActionPerformed(evt);
+    }//GEN-LAST:event_btnCerrarVerDeudasActionPerformed
+
+    private void tableVerDebtsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableVerDebtsMouseClicked
+        //No se debe hacer nada, solo lectura de la tabla.
+    }//GEN-LAST:event_tableVerDebtsMouseClicked
+
+    private void btnCancelarUCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarUCActionPerformed
+        categoryController.ActionPerformed(evt);
+    }//GEN-LAST:event_btnCancelarUCActionPerformed
+
+    private void btnActualizarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarCActionPerformed
+        categoryController.ActionPerformed(evt);
+    }//GEN-LAST:event_btnActualizarCActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizarC;
     private javax.swing.JButton btnActualizarCat;
     private javax.swing.JButton btnAgregarC;
     private javax.swing.JButton btnAgregarCat;
     private javax.swing.JButton btnBorrarCat;
     private javax.swing.JButton btnCancelarAC;
+    private javax.swing.JButton btnCancelarUC;
+    private javax.swing.JButton btnCerrarVerDeudas;
     private javax.swing.JButton btnRedo;
     private javax.swing.JButton btnUndo;
+    private javax.swing.JButton btnVerDeudas;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCategory;
     private javax.swing.JLabel lblCategory1;
+    private javax.swing.JLabel lblCategory2;
+    private javax.swing.JLabel lblCategory3;
+    private javax.swing.JPanel panelActualizarC;
     private javax.swing.JPanel panelAgregarC;
     private javax.swing.JPanel panelPrincipalC;
+    private javax.swing.JPanel panelVerDeudas;
     private javax.swing.JTable tableCategories;
+    private javax.swing.JTable tableVerDebts;
+    private javax.swing.JTextField txtNombreActualizar;
     private javax.swing.JTextField txtNombreAgregar;
     // End of variables declaration//GEN-END:variables
     public void habilitarPanelAgregar(){
         this.panelAgregarC.setVisible(true);
         this.panelPrincipalC.setVisible(false);
+        this.panelVerDeudas.setVisible(false);
+        this.panelActualizarC.setVisible(false);
     }
     
     public void habilitarPanelCategoria(){
         this.panelAgregarC.setVisible(false);
         this.panelPrincipalC.setVisible(true);
+        this.panelVerDeudas.setVisible(false);
+        this.panelActualizarC.setVisible(false);
+    }
+    
+    public void habilitarPanelVerDeudas(){
+        this.panelAgregarC.setVisible(false);
+        this.panelPrincipalC.setVisible(false);
+        this.panelVerDeudas.setVisible(true);
+        this.panelActualizarC.setVisible(false);
+    }
+    
+    public void habilitarPanelActualizar(){
+        this.panelAgregarC.setVisible(false);
+        this.panelPrincipalC.setVisible(false);
+        this.panelVerDeudas.setVisible(false);
+        this.panelActualizarC.setVisible(true);
     }
     
     public void deshabilitarBotones(){
@@ -269,11 +464,21 @@ public class CategoryView extends javax.swing.JPanel {
         this.btnActualizarCat.setEnabled(false);
         this.btnRedo.setEnabled(false);
         this.btnUndo.setEnabled(false);
+        this.btnVerDeudas.setEnabled(false);
+    }
+    
+    public void habilitarVerDeudas(){
+        this.btnBorrarCat.setEnabled(false);
+        this.btnActualizarCat.setEnabled(false);
+        this.btnRedo.setEnabled(false);
+        this.btnUndo.setEnabled(false);
+        this.btnVerDeudas.setEnabled(true);
     }
     
     public void habilitarBotones(){
         this.btnBorrarCat.setEnabled(true);
         this.btnActualizarCat.setEnabled(true);
+        this.btnVerDeudas.setEnabled(true);
     }
 
     public CategoryController getCategoryController() {
@@ -408,7 +613,54 @@ public class CategoryView extends javax.swing.JPanel {
         this.txtNombreAgregar.setText("");
     }
 
-    
+    public JButton getBtnCerrarVerDeudas() {
+        return btnCerrarVerDeudas;
+    }
+
+    public void setBtnCerrarVerDeudas(JButton btnCerrarVerDeudas) {
+        this.btnCerrarVerDeudas = btnCerrarVerDeudas;
+    }
+
+    public JButton getBtnVerDeudas() {
+        return btnVerDeudas;
+    }
+
+    public void setBtnVerDeudas(JButton btnVerDeudas) {
+        this.btnVerDeudas = btnVerDeudas;
+    }
+
+    public JTable getTableVerDebts() {
+        return tableVerDebts;
+    }
+
+    public void setTableVerDebts(JTable tableVerDebts) {
+        this.tableVerDebts = tableVerDebts;
+    }
+
+    public JButton getBtnActualizarC() {
+        return btnActualizarC;
+    }
+
+    public void setBtnActualizarC(JButton btnActualizarC) {
+        this.btnActualizarC = btnActualizarC;
+    }
+
+    public JButton getBtnCancelarUC() {
+        return btnCancelarUC;
+    }
+
+    public void setBtnCancelarUC(JButton btnCancelarUC) {
+        this.btnCancelarUC = btnCancelarUC;
+    }
+
+    public JTextField getTxtNombreActualizar() {
+        return txtNombreActualizar;
+    }
+
+    public void setTxtNombreActualizar(JTextField txtNombreActualizar) {
+        this.txtNombreActualizar = txtNombreActualizar;
+    }
+
     
     
 }

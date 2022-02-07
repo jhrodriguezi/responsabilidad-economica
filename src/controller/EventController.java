@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Debt;
 import model.Event;
+import structures.BinaryHeap;
 import structures.MyArrayList;
 import structures.MyLinkedList;
 import structures.QueueArray;
@@ -25,25 +26,28 @@ import view.Main;
  * @author DELL
  */
 public class EventController {
+    public static BinaryHeap<Event> events;
     private static EventView eventView;
-    private static MyLinkedList<Event> events;
     private static EventDAO eventDAO;
-    private static QueueArray<Event> eventAsc;
     private static MyArrayList<Debt> debts;
     private static DebtDAO debtDAO;
+    private int selectedRow;
     
     public EventController(EventView eventView){
         this.eventView=eventView;
         this.eventDAO=new EventDAO();
         events=eventDAO.getAllEvent();
-        eventAsc=eventDAO.getAllByFechaAsc(events);
         debtDAO=new DebtDAO();
+        selectedRow=-1;
     }
     
     public void ActionPerformed(java.awt.event.ActionEvent evt) {  
         if(evt.getSource()==eventView.getBtnConsultarPorDeuda()){
-            events=eventDAO.getByDebtEvent(debts.get(eventView.getCbxDeudas().getSelectedIndex()));
-            showEvent();
+            eventView.deshabilitarBotones();
+            if(eventView.getCbxDeudas().getSelectedIndex()>=0){
+                events=eventDAO.getByDebtEvent(debts.get(eventView.getCbxDeudas().getSelectedIndex()));
+                showEvent();
+            }
         }
     
     }
@@ -57,12 +61,10 @@ public class EventController {
         eventView.getTableEvents().setModel(new DefaultTableModel(c,0));
         DefaultTableModel tb=(DefaultTableModel)eventView.getTableEvents().getModel();
         Object[] row=new Object[3];
-        Event event;
-        int size=events.size();
-        DecimalFormat df = new DecimalFormat("#");
-        df.setMaximumFractionDigits(2);
-        for(int i=0; i<size;i++){
-            event=events.get(i);
+        if(!events.isEmpty()){
+            Event event = events.findMin();
+            DecimalFormat df = new DecimalFormat("#");
+            df.setMaximumFractionDigits(2);
             row[0]=df.format(event.getValue());
             row[1]=event.getDate();
             row[2]=event.getQuota();
@@ -72,17 +74,17 @@ public class EventController {
     }
     
     public static boolean areThereEvents(){
-        return !eventAsc.isEmpty();
+        return !events.isEmpty();
     }
     
-    public static void showEventAsc(){
+    public static void showEventMainPanel(){
         Main main = MainController.getMainView();
-        if(areThereEvents()){
-            Debt debt = new DebtDAO().getByIdDebt(eventAsc.peek().getIdDebt());
+        if(!events.isEmpty()){
+            Debt debt = new DebtDAO().getByIdDebt(events.findMin().getIdDebt());
             main.getLblAvance().setText("Avance en la deuda asociada a este fraccionamiento: "+debt.getPercent()+"%");
-            main.getLblCuotaCont().setText(""+eventAsc.peek().getQuota());
-            main.getLblFechaCont().setText(eventAsc.peek().getDate());
-            main.getLblValorCont().setText(""+eventAsc.peek().getValue());
+            main.getLblCuotaCont().setText(""+events.findMin().getQuota());
+            main.getLblFechaCont().setText(events.findMin().getDate());
+            main.getLblValorCont().setText(""+events.findMin().getValue());
             main.getLblNombreCont().setText(debt.getName());
             main.repaint();
         }else{
@@ -100,7 +102,7 @@ public class EventController {
     }
     
     public static void deleteEvent(){
-        Event event = eventAsc.poll();
+        Event event = events.deleteMin();
         eventDAO.deleteEvent(event);
         Debt debt = new DebtDAO().getByIdDebt(event.getIdDebt());
         MainController.getMainView().getLblAvance().setText("Avance en la deuda asociada a este fraccionamiento: "+debt.getPercent()+"%");
@@ -111,11 +113,14 @@ public class EventController {
     }
 
     public void CompleteEvent(ActionEvent evt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Event e = events.deleteMin();
+        eventDAO.deleteEvent(e);
+        showEvent();
     }
 
     public void TableMouseClicked(MouseEvent evt) {
         eventView.habilitarBotones();
+        selectedRow = eventView.getTableEvents().getSelectedRow();
     }
     
     public static void deshabilitarBotonesTablaEvent(){

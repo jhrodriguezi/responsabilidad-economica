@@ -325,6 +325,7 @@ public class Main extends javax.swing.JFrame {
     private void btnDeudasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeudasActionPerformed
        mainController.actionPerformed(evt);
        DebtController.refreshDebts();
+       DebtController.clearTextSearch();
        DebtController.showDebt();
        CategoryController.deshabilitarBotonesTablaCategory();
        EventController.deshabilitarBotonesTablaEvent();

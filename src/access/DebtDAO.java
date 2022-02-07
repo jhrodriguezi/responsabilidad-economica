@@ -35,7 +35,7 @@ public class DebtDAO {
                     arrayDebt.add(
                             new Debt(Integer.parseInt(debtJson.get("id").toString()),
                             debtJson.get("name").toString(),
-                            Long.parseLong(debtJson.get("moneyToPaid").toString()),
+                            Float.parseFloat(debtJson.get("moneyToPaid").toString()),
                             debtJson.get("startDate").toString(),
                             Integer.parseInt(debtJson.get("numQuotas").toString()),
                             debtJson.get("periodicity").toString(),
@@ -45,7 +45,7 @@ public class DebtDAO {
                 }
             }
         }catch(Exception e){
-            System.out.println("message: "+e.getMessage());
+            System.out.println("message ERROR: "+e.getMessage());
         }
         return arrayDebt;
     }
@@ -250,8 +250,10 @@ public class DebtDAO {
                     break;
                 }
             }
-            CategoryDAO.decrementCount(Integer.parseInt(tempJson.get("idCategory").toString()));
-            new EventDAO().deleteAllByIdDebtEvent(id);
+            if(Integer.parseInt(tempJson.get("percent").toString())!=100){
+                CategoryDAO.decrementCount(Integer.parseInt(tempJson.get("idCategory").toString()));
+                new EventDAO().deleteAllByIdDebtEvent(id);
+            }
             arrayJson.remove(tempJson);
             FileWriter fw=new FileWriter(f);
             fw.write(arrayJson.toJSONString());
@@ -285,10 +287,16 @@ public class DebtDAO {
             if(debt.getPercent()==0){
                 new EventDAO().deleteAllByIdDebtEvent(debt.getId());
                 calculateEvents(debt);
+            }else if(debt.getPercent()==100){
+                CategoryDAO.decrementCount(debt.getIdCategory());
             }
             for(int i=0;i<arrayJson.size();i++){
                 tempJson=(JSONObject) arrayJson.get(i);
                 if(Integer.parseInt(tempJson.get("id").toString())==debt.getId()){
+                    if(Integer.parseInt(tempJson.get("idCategory").toString())!=debt.getIdCategory()){
+                        CategoryDAO.incrementCount(debt.getIdCategory());
+                        CategoryDAO.decrementCount(Integer.parseInt(tempJson.get("idCategory").toString()));
+                    }
                     tempJson.replace("name",debt.getName());
                     tempJson.replace("moneyToPaid",debt.getMoneyToPaid());
                     tempJson.replace("startDate",debt.getStartDate());
