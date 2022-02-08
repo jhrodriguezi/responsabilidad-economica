@@ -174,20 +174,19 @@ public class DebtDAO {
         float days = 0;
         float frac = debt.getMoneyToPaid()/(float)debt.getNumQuotas();
         switch(debt.getPeriodicity().toLowerCase()){
-            case "semanal" -> {
+            case "semanal":
                 days=7;
-            }
-            case "mensual" -> {
+                break;
+            case "mensual":
                 days=(float)30.417;
-            }
-            case "anual" -> {
+                break;
+            case "anual":
                 days=(float)365.2425;
-            }
-            case "semestral" -> {
+                break;
+            case "semestral":
                 days=(float)182.62125;
-            }
-            default -> {
-            }
+                break;
+            default:
         }
         String newDate = calculateDate(debt.getStartDate(), days);
         for(int i=0; i<debt.getNumQuotas(); i++){

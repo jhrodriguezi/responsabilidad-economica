@@ -129,7 +129,7 @@ public class CategoryDAO {
         return -1;
     }
     
-    public void deteleCategory(Category category){
+    public void deleteCategory(Category category){
         f.setWritable(true);
         try{
             FileReader fr = new FileReader(f);

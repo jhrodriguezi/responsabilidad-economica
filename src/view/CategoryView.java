@@ -46,8 +46,8 @@ public class CategoryView extends javax.swing.JPanel {
         lblCategory = new javax.swing.JLabel();
         btnAgregarCat = new javax.swing.JButton();
         btnActualizarCat = new javax.swing.JButton();
-        btnUndo = new javax.swing.JButton();
-        btnRedo = new javax.swing.JButton();
+        btnUndoC = new javax.swing.JButton();
+        btnRedoC = new javax.swing.JButton();
         btnVerDeudas = new javax.swing.JButton();
         panelAgregarC = new javax.swing.JPanel();
         lblCategory1 = new javax.swing.JLabel();
@@ -117,9 +117,19 @@ public class CategoryView extends javax.swing.JPanel {
             }
         });
 
-        btnUndo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Arrows-Undo-icon.png"))); // NOI18N
+        btnUndoC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Arrows-Undo-icon.png"))); // NOI18N
+        btnUndoC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUndoCActionPerformed(evt);
+            }
+        });
 
-        btnRedo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Arrows-Redo-icon.png"))); // NOI18N
+        btnRedoC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Arrows-Redo-icon.png"))); // NOI18N
+        btnRedoC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRedoCActionPerformed(evt);
+            }
+        });
 
         btnVerDeudas.setText("Ver deudas asociadas");
         btnVerDeudas.addActionListener(new java.awt.event.ActionListener() {
@@ -149,9 +159,9 @@ public class CategoryView extends javax.swing.JPanel {
                                 .addComponent(btnBorrarCat))
                             .addComponent(btnVerDeudas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                        .addComponent(btnUndo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnUndoC, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnRedo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnRedoC, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45)))
                 .addContainerGap())
         );
@@ -169,8 +179,8 @@ public class CategoryView extends javax.swing.JPanel {
                     .addGroup(panelPrincipalCLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(panelPrincipalCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnUndo)
-                            .addComponent(btnRedo))))
+                            .addComponent(btnUndoC)
+                            .addComponent(btnRedoC))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnVerDeudas)
                 .addGap(21, 21, 21)
@@ -401,6 +411,14 @@ public class CategoryView extends javax.swing.JPanel {
         categoryController.ActionPerformed(evt);
     }//GEN-LAST:event_btnActualizarCActionPerformed
 
+    private void btnUndoCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUndoCActionPerformed
+        categoryController.ActionPerformed(evt);
+    }//GEN-LAST:event_btnUndoCActionPerformed
+
+    private void btnRedoCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRedoCActionPerformed
+        categoryController.ActionPerformed(evt);
+    }//GEN-LAST:event_btnRedoCActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizarC;
@@ -411,8 +429,8 @@ public class CategoryView extends javax.swing.JPanel {
     private javax.swing.JButton btnCancelarAC;
     private javax.swing.JButton btnCancelarUC;
     private javax.swing.JButton btnCerrarVerDeudas;
-    private javax.swing.JButton btnRedo;
-    private javax.swing.JButton btnUndo;
+    private javax.swing.JButton btnRedoC;
+    private javax.swing.JButton btnUndoC;
     private javax.swing.JButton btnVerDeudas;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -462,16 +480,16 @@ public class CategoryView extends javax.swing.JPanel {
     public void deshabilitarBotones(){
         this.btnBorrarCat.setEnabled(false);
         this.btnActualizarCat.setEnabled(false);
-        this.btnRedo.setEnabled(false);
-        this.btnUndo.setEnabled(false);
+        this.btnRedoC.setEnabled(false);
+        this.btnUndoC.setEnabled(false);
         this.btnVerDeudas.setEnabled(false);
     }
     
     public void habilitarVerDeudas(){
         this.btnBorrarCat.setEnabled(false);
         this.btnActualizarCat.setEnabled(false);
-        this.btnRedo.setEnabled(false);
-        this.btnUndo.setEnabled(false);
+        this.btnRedoC.setEnabled(false);
+        this.btnUndoC.setEnabled(false);
         this.btnVerDeudas.setEnabled(true);
     }
     
@@ -530,19 +548,19 @@ public class CategoryView extends javax.swing.JPanel {
     }
 
     public JButton getBtnRedo() {
-        return btnRedo;
+        return btnRedoC;
     }
 
     public void setBtnRedo(JButton btnRedo) {
-        this.btnRedo = btnRedo;
+        this.btnRedoC = btnRedo;
     }
 
     public JButton getBtnUndo() {
-        return btnUndo;
+        return btnUndoC;
     }
 
     public void setBtnUndo(JButton btnUndo) {
-        this.btnUndo = btnUndo;
+        this.btnUndoC = btnUndo;
     }
 
     public JLabel getjLabel3() {

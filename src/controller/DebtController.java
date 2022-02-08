@@ -88,28 +88,28 @@ public class DebtController {
             if(undoStack.empty())debtView.getBtnUndo().setEnabled(false);
             Debt d = (Debt) r.getEntidad();
             switch(r.getMetodo()){
-                case "update" -> {
+                case "update":
                     if(redoStack.search(new Record<Debt>("update",debts.get(r.getLastRow()),r.getLastRow()))==0)
                         redoStack.push(new Record<Debt>("update",debts.get(r.getLastRow()),r.getLastRow()));
                     searchDebt.remove(debts.get(r.getLastRow()));
                     debts.set(r.getLastRow(), d);
                     searchDebt.insert(d);
-                }
-                case "insert" -> {
+                    break;
+                case "insert":
                     debtDAO.deleteByIdDebt(d.getId());
                     if(redoStack.search(new Record<Debt>("delete",d, r.getLastRow()))==0)
                         redoStack.push(new Record<Debt>("delete",d, r.getLastRow())); 
                     searchDebt.remove(d);
                     debts.remove(r.getLastRow());
-                }
-                case "delete" -> {
+                    break;
+                case "delete":
                     debtDAO.insertDebt(d, true);
                     if(redoStack.search(new Record<Debt>("insert",d,r.getLastRow()))==0)
                         redoStack.push(new Record<Debt>("insert",d,r.getLastRow()));
                     debts.add(r.getLastRow(), d);
                     searchDebt.insert(d);
-                }
-                default->{}
+                    break;
+                default:
             }
             if(!redoStack.empty())debtView.getBtnRedo().setEnabled(true);
             showDebt();
@@ -119,28 +119,28 @@ public class DebtController {
             if(redoStack.empty())debtView.getBtnRedo().setEnabled(false);
             Debt d = (Debt) r.getEntidad();
             switch(r.getMetodo()){
-                case "update" -> {
+                case "update":
                     if(undoStack.search(new Record<Debt>("update",debts.get(r.getLastRow()),r.getLastRow()))==0)
                         undoStack.push(new Record<Debt>("update",debts.get(r.getLastRow()),r.getLastRow()));
                     searchDebt.remove(debts.get(r.getLastRow()));
                     debts.set(r.getLastRow(), d);
                     searchDebt.insert(d);
-                }
-                case "insert" -> {
+                    break;
+                case "insert":
                     debtDAO.deleteByIdDebt(d.getId());
                     if(undoStack.search(new Record<Debt>("delete",d, r.getLastRow()))==0)
                         undoStack.push(new Record<Debt>("delete",d, r.getLastRow()));
                     debts.remove(r.getLastRow());
                     searchDebt.remove(d);
-                }
-                case "delete" -> {
+                    break;
+                case "delete":
                     debtDAO.insertDebt(d, true);
                     if(undoStack.search(new Record<Debt>("insert",d, r.getLastRow()))==0)
                         undoStack.push(new Record<Debt>("insert",d, r.getLastRow()));
                     debts.add(r.getLastRow(), d);
                     searchDebt.insert(d);
-                }
-                default->{}
+                    break;
+                default:
             }
             showDebt();
             if(!undoStack.empty())debtView.getBtnUndo().setEnabled(true);
@@ -271,6 +271,7 @@ public class DebtController {
         String descripcion = debtView.getTxtDescripcionActualizar().getText();
         Debt temp=new Debt(lastTableDebt.getId(), name, valor, fecha, cuotas, periodicidad, descripcion, idCategory, 0);
         undoStack.push(new Record<Debt>("update", lastTableDebt, rowSelected));
+        emptyRedoStack();
         debtDAO.updateDebt(temp);
         searchDebt.remove(debts.get(rowSelected));
         debts.set(rowSelected, temp);

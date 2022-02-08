@@ -17,7 +17,7 @@ import structures.MyLinkedHashMap;
 import structures.MyLinkedList;
 import structures.StackArray;
 import view.CategoryView;
-
+import model.Record;
 /**
  *
  * @author DELL
@@ -29,6 +29,7 @@ public class CategoryController {
     private static StackArray<Record> undoStack;
     private static StackArray<Record> redoStack;
     private static int selectedRow;
+    private Record<Category> r;
 
     public CategoryController(CategoryView categoryView){
         this.categoryView = categoryView;
@@ -70,13 +71,71 @@ public class CategoryController {
         }else if(evt.getSource()==categoryView.getBtnActualizarC()){
             if(selectedRow>=0){
                 Category c = categories.get(selectedRow);
-                c.setName(categoryView.getTxtNombreActualizar().getText());
-                CategoryDAO.updateCategory(c);
+                undoStack.push(new Record<Category>("update", c, selectedRow));
+                emptyRedoStack();
+                categoryView.getBtnUndo().setEnabled(true);
+                Category newC = new Category(c.getId(), categoryView.getTxtNombreActualizar().getText(), c.getCountDebt(), c.getActiveDebt());
+                categoryDAO.updateCategory(newC);
                 refreshCategory();
                 showCategory();
                 JOptionPane.showMessageDialog(categoryView, "Categoria actualizada exitosamente");
                 categoryView.habilitarPanelCategoria();
             }
+        }else if(evt.getSource()==categoryView.getBtnRedo()){
+            r=redoStack.pop();
+            if(redoStack.empty())categoryView.getBtnRedo().setEnabled(false);
+            Category c = (Category) r.getEntidad();
+            switch(r.getMetodo()){
+                case "update":
+                    categoryDAO.updateCategory(c);
+                    if(undoStack.search(new Record<Category>("update",categories.get(r.getLastRow()),r.getLastRow()))==0)
+                        undoStack.push(new Record<Category>("update",categories.get(r.getLastRow()),r.getLastRow()));
+                    categories.set(r.getLastRow(), c);
+                    break;
+                case "insert":
+                    categoryDAO.deleteCategory(c);
+                    if(undoStack.search(new Record<Category>("delete",c, r.getLastRow()))==0)
+                        undoStack.push(new Record<Category>("delete",c, r.getLastRow()));
+                    categories.remove(r.getLastRow());
+                    break;
+                case "delete":
+                    categoryDAO.insertCategory(c);
+                    if(undoStack.search(new Record<Category>("insert",c, r.getLastRow()))==0)
+                        undoStack.push(new Record<Category>("insert",c, r.getLastRow()));
+                    categories.add(r.getLastRow(), c);
+                    break;
+                default:
+            }
+            if(!undoStack.empty())categoryView.getBtnUndo().setEnabled(true);
+            showCategory();
+        }else if(evt.getSource()==categoryView.getBtnUndo()){
+            r=undoStack.pop();
+            if(undoStack.empty())categoryView.getBtnUndo().setEnabled(false);
+            Category c = (Category) r.getEntidad();
+            switch(r.getMetodo()){
+                case "update":
+                    categoryDAO.updateCategory(c);
+                    if(redoStack.search(new Record<Category>("update",categories.get(r.getLastRow()),r.getLastRow()))==0)
+                        redoStack.push(new Record<Category>("update",categories.get(r.getLastRow()),r.getLastRow()));
+                    categories.set(r.getLastRow(), c);
+                    System.out.println(redoStack);
+                    break;
+                case "insert":
+                    categoryDAO.deleteCategory(c);
+                    if(redoStack.search(new Record<Category>("delete",c, r.getLastRow()))==0)
+                        redoStack.push(new Record<Category>("delete",c, r.getLastRow())); 
+                    categories.remove(r.getLastRow());
+                    break;
+                case "delete":
+                    categoryDAO.insertCategory(c);
+                    if(redoStack.search(new Record<Category>("insert",c,r.getLastRow()))==0)
+                        redoStack.push(new Record<Category>("insert",c,r.getLastRow()));
+                    categories.add(r.getLastRow(), c);
+                    break;
+                default:
+            }
+            if(!redoStack.empty())categoryView.getBtnRedo().setEnabled(true);
+            showCategory();
         }
     }
     
@@ -119,10 +178,20 @@ public class CategoryController {
         }
         categoryView.getTableVerDebts().setModel(tb);
     }
+    
+    public void emptyRedoStack(){
+        while(!redoStack.empty()){
+            redoStack.pop();
+        }
+        categoryView.getBtnRedo().setEnabled(false);
+    }
 
     public void deleteCategory() {
         Category c = categories.remove(selectedRow);
-        categoryDAO.deteleCategory(c);
+        undoStack.push(new Record<Category>("delete", c, selectedRow));
+        emptyRedoStack();
+        categoryView.getBtnUndo().setEnabled(true);
+        categoryDAO.deleteCategory(c);
         refreshCategory();
         showCategory();
     }
@@ -130,6 +199,9 @@ public class CategoryController {
     public void insertCategory() {
         String name = categoryView.getTxtNombreAgregar().getText();
         Category c= new Category(CategoryDAO.getLastIndex(),name,0,0);
+        undoStack.push(new Record<Category>("insert", c, categories.size()));
+        emptyRedoStack();
+        categoryView.getBtnUndo().setEnabled(true);
         categoryDAO.insertCategory(c);
         categories.add(c);
         JOptionPane.showMessageDialog(categoryView, "Categoria agregada exitosamente");

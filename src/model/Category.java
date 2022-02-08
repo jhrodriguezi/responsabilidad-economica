@@ -77,7 +77,7 @@ public class Category {
             return false;
         }
         final Category other = (Category) obj;
-        return this.id == other.id;
+        return this.id == other.id && this.name.equals(other.getName());
     }
     
     @Override

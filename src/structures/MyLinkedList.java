@@ -224,13 +224,6 @@ public class MyLinkedList<T> implements List<T>{
         message+="]";
         return message;
     }
-
-    public static void main(String[] args) {
-        MyLinkedList<Integer> n = new MyLinkedList<Integer>();
-        for(int i = 0; i < 100; i++)
-            n.add(i);
-        System.out.println(n);
-    }
 }
 
 class Node<T>{

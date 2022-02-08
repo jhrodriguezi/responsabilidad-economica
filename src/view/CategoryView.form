@@ -53,9 +53,9 @@
                               <Component id="btnVerDeudas" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace pref="52" max="32767" attributes="0"/>
-                          <Component id="btnUndo" min="-2" pref="38" max="-2" attributes="0"/>
+                          <Component id="btnUndoC" min="-2" pref="38" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnRedo" min="-2" pref="38" max="-2" attributes="0"/>
+                          <Component id="btnRedoC" min="-2" pref="38" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -78,8 +78,8 @@
                       <Group type="102" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btnUndo" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnRedo" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnUndoC" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnRedoC" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -148,19 +148,25 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnActualizarCatActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnUndo">
+        <Component class="javax.swing.JButton" name="btnUndoC">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/images/Arrows-Undo-icon.png"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUndoCActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnRedo">
+        <Component class="javax.swing.JButton" name="btnRedoC">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/images/Arrows-Redo-icon.png"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRedoCActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnVerDeudas">
           <Properties>
