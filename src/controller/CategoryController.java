@@ -46,9 +46,11 @@ public class CategoryController {
         }else if(evt.getSource()==categoryView.getBtnCancelarAC()){
             categoryView.habilitarPanelCategoria();
         }else if(evt.getSource()==categoryView.getBtnAgregarC()){
-            insertCategory();
-            categoryView.habilitarPanelCategoria();
-            showCategory();
+            if(validateData('I')){
+                insertCategory();
+                categoryView.habilitarPanelCategoria();
+                showCategory();
+            }
         }else if(evt.getSource()==categoryView.getBtnCancelarAC()){
             categoryView.habilitarPanelCategoria();
         }else if(evt.getSource()==categoryView.getBtnCerrarVerDeudas()){
@@ -69,7 +71,7 @@ public class CategoryController {
         }else if(evt.getSource()==categoryView.getBtnCancelarUC()){
             categoryView.habilitarPanelCategoria();
         }else if(evt.getSource()==categoryView.getBtnActualizarC()){
-            if(selectedRow>=0){
+            if(validateData('U')){
                 Category c = categories.get(selectedRow);
                 undoStack.push(new Record<Category>("update", c, selectedRow));
                 emptyRedoStack();
@@ -197,15 +199,15 @@ public class CategoryController {
     }
     
     public void insertCategory() {
-        String name = categoryView.getTxtNombreAgregar().getText();
-        Category c= new Category(CategoryDAO.getLastIndex(),name,0,0);
-        undoStack.push(new Record<Category>("insert", c, categories.size()));
-        emptyRedoStack();
-        categoryView.getBtnUndo().setEnabled(true);
-        categoryDAO.insertCategory(c);
-        categories.add(c);
-        JOptionPane.showMessageDialog(categoryView, "Categoria agregada exitosamente");
-        categoryView.cleanFieldsAgregar();
+            String name = categoryView.getTxtNombreAgregar().getText();
+            Category c= new Category(CategoryDAO.getLastIndex(),name,0,0);
+            undoStack.push(new Record<Category>("insert", c, categories.size()));
+            emptyRedoStack();
+            categoryView.getBtnUndo().setEnabled(true);
+            categoryDAO.insertCategory(c);
+            categories.add(c);
+            JOptionPane.showMessageDialog(categoryView, "Categoria agregada exitosamente");
+            categoryView.cleanFieldsAgregar();
     }
 
     public void TableMouseClicked(MouseEvent evt) {
@@ -217,5 +219,27 @@ public class CategoryController {
     
     public static void deshabilitarBotonesTablaCategory(){
         categoryView.deshabilitarBotones();
+    }
+    
+    public boolean validateData(char c){
+        String name = "";
+        if(c=='U'){
+            name = categoryView.getTxtNombreActualizar().getText();
+            if(selectedRow<0){
+                JOptionPane.showMessageDialog(categoryView, "Ha ocurrido un problema al actualizar la categoria.");
+                return false;
+            }
+            
+        }else if(c=='I'){
+            name = categoryView.getTxtNombreAgregar().getText();
+        }
+        for(int i = 0; i < categories.size(); i++){
+            if(categories.get(i).getName().equals(name)){
+                JOptionPane.showMessageDialog(categoryView, "El nombre de esa categorias ya existe, recuerde que el programa no distingue entre mayusculas y minusculas.");
+                return false;
+            }
+        }
+        
+        return true;
     }
 }

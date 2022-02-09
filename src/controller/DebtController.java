@@ -242,41 +242,172 @@ public class DebtController {
     }
 
     public void insertDebt() {
-        String name = debtView.getTxtNombreAgregar().getText();
-        float valor = Float.parseFloat(debtView.getTxtValorAgregar().getText());
-        String fecha = debtView.getTxtFechaInicialAgregar().getText();
-        int cuotas = Integer.parseInt(debtView.getTxtNumCuotasAgregar().getText());
-        String periodicidad = debtView.getCbxPeriodicidadAgregar().getSelectedItem().toString();
-        int idCategory = categories.get(debtView.getCbxCategoriaAgregar().getSelectedIndex()).getId();
-        String descripcion = debtView.getTxtDescripcionAgregar().getText();
-        Debt d= new Debt(DebtDAO.getLastIndex(),name,valor,fecha,cuotas,periodicidad,descripcion,idCategory,0);
-        undoStack.push(new Record<Debt>("insert", d, debts.size()));
-        emptyRedoStack();
-        debtDAO.insertDebt(d, true);
-        debts.add(d);
-        searchDebt.insert(d);
-        JOptionPane.showMessageDialog(debtView, "Deuda agregada exitosamente");
-        debtView.activarPanelPrincipalD();
-        debtView.cleanFieldsAgregar();
-        CategoryController.refreshCategory();
+        if(validateData('I')){
+            String name = debtView.getTxtNombreAgregar().getText();
+            float valor = Float.parseFloat(debtView.getTxtValorAgregar().getText());
+            String fecha = debtView.getTxtFechaInicialAgregar().getText();
+            int cuotas = Integer.parseInt(debtView.getTxtNumCuotasAgregar().getText());
+            String periodicidad = debtView.getCbxPeriodicidadAgregar().getSelectedItem().toString();
+            int idCategory = categories.get(debtView.getCbxCategoriaAgregar().getSelectedIndex()).getId();
+            String descripcion = debtView.getTxtDescripcionAgregar().getText();
+            Debt d= new Debt(DebtDAO.getLastIndex(),name,valor,fecha,cuotas,periodicidad,descripcion,idCategory,0);
+            undoStack.push(new Record<Debt>("insert", d, debts.size()));
+            emptyRedoStack();
+            debtDAO.insertDebt(d, true);
+            debts.add(d);
+            searchDebt.insert(d);
+            JOptionPane.showMessageDialog(debtView, "Deuda agregada exitosamente");
+            debtView.activarPanelPrincipalD();
+            debtView.cleanFieldsAgregar();
+            CategoryController.refreshCategory();
+        }
     }
     
     public void updateDebt(){
-        String name = debtView.getTxtNombreActualizar().getText();
-        float valor = Float.parseFloat(debtView.getTxtValorActualizar().getText());
-        String fecha = debtView.getTxtFechaInicialActualizar().getText();
-        int cuotas = Integer.parseInt(debtView.getTxtNumCuotasActualizar().getText());
-        String periodicidad = debtView.getCbxPeriodicidadActualizar().getSelectedItem().toString();
-        int idCategory = categories.get(debtView.getCbxCategoriaActualizar().getSelectedIndex()).getId();
-        String descripcion = debtView.getTxtDescripcionActualizar().getText();
-        Debt temp=new Debt(lastTableDebt.getId(), name, valor, fecha, cuotas, periodicidad, descripcion, idCategory, 0);
-        undoStack.push(new Record<Debt>("update", lastTableDebt, rowSelected));
-        emptyRedoStack();
-        debtDAO.updateDebt(temp);
-        searchDebt.remove(debts.get(rowSelected));
-        debts.set(rowSelected, temp);
-        searchDebt.insert(temp);
-        JOptionPane.showMessageDialog(debtView, "Deuda actualizada exitosamente");
-        debtView.activarPanelPrincipalD();
+        if(validateData('U')){
+            String name = debtView.getTxtNombreActualizar().getText();
+            float valor = Float.parseFloat(debtView.getTxtValorActualizar().getText());
+            String fecha = debtView.getTxtFechaInicialActualizar().getText();
+            int cuotas = Integer.parseInt(debtView.getTxtNumCuotasActualizar().getText());
+            String periodicidad = debtView.getCbxPeriodicidadActualizar().getSelectedItem().toString();
+            int idCategory = categories.get(debtView.getCbxCategoriaActualizar().getSelectedIndex()).getId();
+            String descripcion = debtView.getTxtDescripcionActualizar().getText();
+            Debt temp=new Debt(lastTableDebt.getId(), name, valor, fecha, cuotas, periodicidad, descripcion, idCategory, 0);
+            undoStack.push(new Record<Debt>("update", lastTableDebt, rowSelected));
+            emptyRedoStack();
+            debtDAO.updateDebt(temp);
+            searchDebt.remove(debts.get(rowSelected));
+            debts.set(rowSelected, temp);
+            searchDebt.insert(temp);
+            JOptionPane.showMessageDialog(debtView, "Deuda actualizada exitosamente");
+            debtView.activarPanelPrincipalD();
+        }
     }  
+    
+    public boolean validateData(char c){
+        if(c=='U'){
+            String name = debtView.getTxtNombreActualizar().getText();
+            float valor = 0;
+            try {  
+                valor = Float.parseFloat(debtView.getTxtValorActualizar().getText());
+            }catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(debtView, "El valor que está ingresando en el campo valor a pagar no es numerico.");
+                return false;  
+            }  
+            String fecha = debtView.getTxtFechaInicialActualizar().getText();
+            int cuotas = 0;
+            try{
+                cuotas = Integer.parseInt(debtView.getTxtNumCuotasActualizar().getText());
+            }catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(debtView, "El valor que está ingresando en el campo cuotas no es numerico.");
+                return false;  
+            }  
+            String periodicidad = debtView.getCbxPeriodicidadActualizar().getSelectedItem().toString();
+            int idCategory = categories.get(debtView.getCbxCategoriaActualizar().getSelectedIndex()).getId();
+            String descripcion = debtView.getTxtDescripcionActualizar().getText();
+            if(descripcion.length()>300){
+                JOptionPane.showMessageDialog(debtView, "La descripcion de la deuda no puede exceder los 300 caracteres.");
+                return false;
+            }
+            Debt temp=new Debt(lastTableDebt.getId(), name, valor, fecha, cuotas, periodicidad, descripcion, idCategory, 0);
+            if(searchDebt.contains(temp) && !name.equals(debts.get(rowSelected).getName())){
+                JOptionPane.showMessageDialog(debtView, "Ya existe una deuda con ese nombre (recuerde que el programa no distingue mayusculas y minisculas).");
+                return false;
+            }
+            if(fecha.contains("-")){
+                String[] date = fecha.split("-");
+                if(date.length==3){
+                    try{
+                        int a,m,d;
+                        a = Integer.parseInt(date[0]);
+                        m = Integer.parseInt(date[1]);
+                        d = Integer.parseInt(date[2]);
+                        if(a>9999){
+                            JOptionPane.showMessageDialog(debtView, "En el campo fecha inicial el año no puede ser mayor a 9999, revise los datos.");
+                            return false;
+                        }
+                        if(m<=0 || m>12){
+                            JOptionPane.showMessageDialog(debtView, "En el campo fecha inicial el mes no puede ser mayor a 12 o menor a 1, revise los datos.");
+                            return false;
+                        }
+                        if(d<=0 || d>31){
+                            JOptionPane.showMessageDialog(debtView, "En el campo fecha inicial el dia no puede ser mayor a 31 o menor a 1, revise los datos.");
+                            return false;
+                        }
+                    }catch(NumberFormatException e){
+                        JOptionPane.showMessageDialog(debtView, "La fecha contiene caracteres.");
+                        return false;  
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(debtView, "Hay algo mal en el campo fecha inicial, recuerde que ese campo tiene formato AAAA-MM-DD.");
+                    return false;
+                }
+            }else{
+                JOptionPane.showMessageDialog(debtView, "Hay algo mal en el campo fecha inicial, recuerde que ese campo tiene formato AAAA-MM-DD.");
+                return false;
+            }
+        }else if(c=='I'){
+            String name = debtView.getTxtNombreAgregar().getText();
+            float valor = 0;
+            try {  
+                valor = Float.parseFloat(debtView.getTxtValorAgregar().getText());
+            }catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(debtView, "El valor que está ingresando en el campo valor a pagar no es numerico.");
+                return false;  
+            }
+            String fecha = debtView.getTxtFechaInicialAgregar().getText();
+            if(fecha.contains("-")){
+                String[] date = fecha.split("-");
+                if(date.length==3){
+                    try{
+                        int a,m,d;
+                        a = Integer.parseInt(date[0]);
+                        m = Integer.parseInt(date[1]);
+                        d = Integer.parseInt(date[2]);
+                        if(a>9999){
+                            JOptionPane.showMessageDialog(debtView, "En el campo fecha inicial el año no puede ser mayor a 9999, revise los datos.");
+                            return false;
+                        }
+                        if(m<=0 || m>12){
+                            JOptionPane.showMessageDialog(debtView, "En el campo fecha inicial el mes no puede ser mayor a 12 o menor a 1, revise los datos.");
+                            return false;
+                        }
+                        if(d<=0 || d>31){
+                            JOptionPane.showMessageDialog(debtView, "En el campo fecha inicial el dia no puede ser mayor a 31 o menor a 1, revise los datos.");
+                            return false;
+                        }
+                    }catch(NumberFormatException e){
+                        JOptionPane.showMessageDialog(debtView, "La fecha contiene caracteres.");
+                        return false;  
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(debtView, "Hay algo mal en el campo fecha inicial, recuerde que ese campo tiene formato AAAA-MM-DD.");
+                    return false;
+                }
+            }else{
+                JOptionPane.showMessageDialog(debtView, "Hay algo mal en el campo fecha inicial, recuerde que ese campo tiene formato AAAA-MM-DD.");
+                return false;
+            }
+            int cuotas = 0;
+            try{
+                cuotas = Integer.parseInt(debtView.getTxtNumCuotasAgregar().getText());
+            }catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(debtView, "El valor que está ingresando en el campo cuotas no es numerico.");
+                return false;  
+            }
+            String periodicidad = debtView.getCbxPeriodicidadAgregar().getSelectedItem().toString();
+            int idCategory = categories.get(debtView.getCbxCategoriaAgregar().getSelectedIndex()).getId();
+            String descripcion = debtView.getTxtDescripcionAgregar().getText();
+            if(descripcion.length()>300){
+                JOptionPane.showMessageDialog(debtView, "La descripcion de la deuda no puede exceder los 300 caracteres.");
+                return false;
+            }
+            Debt d= new Debt(DebtDAO.getLastIndex(),name,valor,fecha,cuotas,periodicidad,descripcion,idCategory,0);
+            if(searchDebt.contains(d)){
+                JOptionPane.showMessageDialog(debtView, "Ya existe una deuda con ese nombre (recuerde que el programa no distingue mayusculas y minisculas).");
+                return false;
+            }
+        }
+        return true;
+    }
 }

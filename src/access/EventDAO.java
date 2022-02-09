@@ -16,7 +16,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import structures.BinaryHeap;
+import structures.MyBinaryHeap;
 import structures.MyArrayList;
 import structures.MyLinkedList;
 import structures.QueueArray;
@@ -30,8 +30,8 @@ public class EventDAO {
     private final File f = new File("data/events.json");
     private final File fIndex = new File("data/lastIndex.json");
     
-    public BinaryHeap<Event> getByDebtEvent(Debt debt){
-        BinaryHeap<Event> events = new BinaryHeap();
+    public MyBinaryHeap<Event> getByDebtEvent(Debt debt){
+        MyBinaryHeap<Event> events = new MyBinaryHeap();
         try{
             Object obj = jsonParser.parse(new FileReader(f));
             JSONArray jsonArr=(JSONArray) obj;
@@ -53,8 +53,8 @@ public class EventDAO {
         return events;
     }
     
-    public BinaryHeap<Event> getAllEvent(){
-        BinaryHeap<Event> events = new BinaryHeap<Event>();
+    public MyBinaryHeap<Event> getAllEvent(){
+        MyBinaryHeap<Event> events = new MyBinaryHeap<Event>();
         try{
             FileReader fr = new FileReader(f);
             JSONArray jsonArr=(JSONArray) jsonParser.parse(fr);

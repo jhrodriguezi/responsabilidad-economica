@@ -155,7 +155,8 @@ public class DebtDAO {
             debtJson.put("description",debt.getDescription());
             debtJson.put("idCategory",debt.getIdCategory());
             debtJson.put("percent",debt.getPercent());
-            CategoryDAO.incrementCount(debt.getIdCategory());
+            if(debt.getPercent()<100)
+                CategoryDAO.incrementCount(debt.getIdCategory());
             debt.setId(id);
             calculateEvents(debt);
             arrayJson.add(debtJson);

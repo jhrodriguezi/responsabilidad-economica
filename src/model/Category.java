@@ -59,10 +59,8 @@ public class Category {
         for(int i = 0; i<this.name.length(); i++){
             if(i<5)
                 hash+=name.charAt(i)*(27^i);
-            else
-                hash+=name.charAt(i)*(27^5);
         }
-        return hash;
+        return hash>0?hash:-1*hash;
     }
 
     @Override

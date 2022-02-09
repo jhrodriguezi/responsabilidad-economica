@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Debt;
 import model.Event;
-import structures.BinaryHeap;
+import structures.MyBinaryHeap;
 import structures.MyArrayList;
 import structures.MyLinkedList;
 import structures.QueueArray;
@@ -26,7 +26,7 @@ import view.Main;
  * @author DELL
  */
 public class EventController {
-    public static BinaryHeap<Event> events;
+    public static MyBinaryHeap<Event> events;
     private static EventView eventView;
     private static EventDAO eventDAO;
     private static MyArrayList<Debt> debts;
@@ -115,6 +115,7 @@ public class EventController {
     public void CompleteEvent(ActionEvent evt) {
         Event e = events.deleteMin();
         eventDAO.deleteEvent(e);
+        startComponentsDeuda();
         showEvent();
     }
 

@@ -1,16 +1,16 @@
 package structures;
 import javax.management.RuntimeErrorException;
 
-public class BinaryHeap <T extends Comparable <?super T>> {
+public class MyBinaryHeap <T extends Comparable <?super T>> {
     private static final int DEFAULT_CAPACITY = 10;
     private int currentSize;
     private T[] array;
     
-    public BinaryHeap() {
+    public MyBinaryHeap() {
         this(DEFAULT_CAPACITY);
     }
     
-    public BinaryHeap(int capacity) {
+    public MyBinaryHeap(int capacity) {
         currentSize=0;
         array = (T[]) new Comparable[capacity+1];
     }
@@ -25,9 +25,9 @@ public class BinaryHeap <T extends Comparable <?super T>> {
     
     public void enlargeArray(int newSize) {
         if (!(newSize<this.currentSize)){
-            T[] old = this.array;
+            T[] old = this.array.clone();
             this.array= (T[]) new Comparable[newSize];
-            for (int i=0; i<this.currentSize; i++){
+            for (int i=0; i<old.length; i++){
                 this.array[i]=old[i];
             }
         }
@@ -95,5 +95,10 @@ public class BinaryHeap <T extends Comparable <?super T>> {
         for (int i=0; i<temp;i++) {
             if (i!=0) System.out.println(array[i]);
         }
+    }
+    
+    public void clear(){
+        currentSize=0;
+        array = (T[]) new Comparable[DEFAULT_CAPACITY+1];
     }
 }

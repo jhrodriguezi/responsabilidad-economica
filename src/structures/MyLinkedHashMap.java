@@ -6,8 +6,8 @@ import java.util.Set;
 
 public class MyLinkedHashMap<K,V>{
     static final int INITIAL_SIZE=101;
-    private int capacity;
-    private int numElementos;
+    public int capacity;
+    public int numElementos;
     final double DEFAULT_LOAD_FACTOR = 1.0;
     private MyLinkedList<MyLinkedEntry<K,V>>[] hashTable;
     
@@ -79,7 +79,7 @@ public class MyLinkedHashMap<K,V>{
     }
 
     public void put(K key, V value) {
-        if((double)(numElementos/capacity)>DEFAULT_LOAD_FACTOR)
+        if((double)numElementos/capacity>DEFAULT_LOAD_FACTOR)
             rehash();
         numElementos++;
         MyLinkedEntry<K,V> n = new MyLinkedEntry<K,V>();
