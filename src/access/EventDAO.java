@@ -16,6 +16,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import structures.MyBinaryHeap;
 import structures.MyArrayList;
 import structures.MyLinkedList;
 import structures.QueueArray;
@@ -29,8 +30,8 @@ public class EventDAO {
     private final File f = new File("data/events.json");
     private final File fIndex = new File("data/lastIndex.json");
     
-    public MyLinkedList<Event> getByDebtEvent(Debt debt){
-        MyLinkedList<Event> linkEvent = new MyLinkedList();
+    public MyBinaryHeap<Event> getByDebtEvent(Debt debt){
+        MyBinaryHeap<Event> events = new MyBinaryHeap();
         try{
             Object obj = jsonParser.parse(new FileReader(f));
             JSONArray jsonArr=(JSONArray) obj;
@@ -38,7 +39,7 @@ public class EventDAO {
                 JSONObject event =(JSONObject) jsonArr.get(i);
                 if (debt.getId()==Integer.parseInt(event.get("idDebt").toString())){
                     JSONObject debtJson=(JSONObject)jsonArr.get(i);
-                    linkEvent.add(
+                    events.insert(
                             new Event(Integer.parseInt(debtJson.get("id").toString()),
                             Integer.parseInt(debtJson.get("idDebt").toString()),
                             Float.parseFloat(debtJson.get("value").toString()),
@@ -49,25 +50,17 @@ public class EventDAO {
         }catch(IOException | NumberFormatException | ParseException e){
             System.out.println("message: "+e.getMessage());
         }
-        return linkEvent;
+        return events;
     }
     
-    public MyLinkedList<Event> getAllEvent(){
-        MyLinkedList<Event> linkEvent = new MyLinkedList();
+    public MyBinaryHeap<Event> getAllEvent(){
+        MyBinaryHeap<Event> events = new MyBinaryHeap<Event>();
         try{
             FileReader fr = new FileReader(f);
             JSONArray jsonArr=(JSONArray) jsonParser.parse(fr);
-            Collections.sort(jsonArr,new Comparator<JSONObject>(){
-                 public int compare(JSONObject c1,JSONObject c2){
-                       String[] n = c1.get("date").toString().split("-");
-                       String[] m = c2.get("date").toString().split("-");
-                       int n_v = Integer.parseInt(n[0])*365+Integer.parseInt(n[1])*30+Integer.parseInt(n[2]);
-                       int m_v = Integer.parseInt(m[0])*365+Integer.parseInt(m[1])*30+Integer.parseInt(m[2]);
-                       return new Integer(n_v).compareTo(new Integer(m_v));
-                 }});
             for(int i=0; i<jsonArr.size(); i++){
                 JSONObject debtJson=(JSONObject)jsonArr.get(i);
-                linkEvent.add(
+                events.insert(
                             new Event(Integer.parseInt(debtJson.get("id").toString()),
                             Integer.parseInt(debtJson.get("idDebt").toString()),
                             Float.parseFloat(debtJson.get("value").toString()),
@@ -77,16 +70,9 @@ public class EventDAO {
         }catch(IOException | NumberFormatException | ParseException e){
             System.out.println("message: "+e.getMessage());
         }
-        return linkEvent;
+        return events;
     }
     
-    public QueueArray<Event> getAllByFechaAsc(MyLinkedList<Event> linkEvent){
-        QueueArray<Event> queueEvent=new QueueArray();
-        for(int i=0; i<linkEvent.size();i++){
-            queueEvent.offer(linkEvent.get(i));
-        }
-        return queueEvent;
-    }
     
     public void insertEvent(Event event){
         f.setWritable(true);

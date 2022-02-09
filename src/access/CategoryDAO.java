@@ -15,6 +15,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import structures.MyArrayList;
+import structures.MyLinkedHashMap;
 import structures.MyLinkedList;
 
 /**
@@ -40,7 +41,7 @@ public class CategoryDAO {
                             Integer.parseInt(cateJson.get("activeDebt").toString())));
             }
         }catch(IOException | NumberFormatException | ParseException e){
-            System.out.println("message: "+e.getMessage());
+            System.out.println("get all message: "+e.getMessage());
         }
         return linkCategory;
     }
@@ -59,22 +60,26 @@ public class CategoryDAO {
                 }
             }
         }catch(Exception e){
-            System.out.println("message: "+e.getMessage());
+            System.out.println("get by id message: "+e.getMessage());
         }
         return null;
     }
     
     public static void incrementCount(int idCategory){
         Category c = getByIdCategory(idCategory);
-        c.setActiveDebt(1+c.getActiveDebt());
-        c.setCountDebt(1+c.getCountDebt());
-        updateCategory(c);
+        if(c!=null){
+            c.setActiveDebt(1+c.getActiveDebt());
+            c.setCountDebt(1+c.getCountDebt());
+            updateCategory(c);
+        }
     }
     
     public static void decrementCount(int idCategory){
         Category c = getByIdCategory(idCategory);
-        c.setActiveDebt(c.getActiveDebt()-1);
-        updateCategory(c);
+        if(c!=null){
+            c.setActiveDebt(c.getActiveDebt()-1);
+            updateCategory(c);
+        }
     }
     
     public void insertCategory(Category category){
@@ -94,7 +99,7 @@ public class CategoryDAO {
             fw.flush();
             updateIndex();
         }catch(IOException | ParseException e){
-            System.out.println("message: "+e.getMessage());
+            System.out.println("insert message: "+e.getMessage());
         }
     }
     
@@ -106,10 +111,10 @@ public class CategoryDAO {
             indexJson.replace("idCategory", (Integer.parseInt(indexJson.get("idCategory").toString())+1));
             FileWriter fw=new FileWriter(fIndex);
             fw.write(indexJson.toJSONString());
-            f.setWritable(false);
+            fIndex.setWritable(false);
             fw.flush();
         }catch(IOException | ParseException e){
-            System.out.println("message: "+e.getMessage());
+            System.out.println("update Index message: "+e.getMessage());
         }
     }
     
@@ -119,12 +124,12 @@ public class CategoryDAO {
             JSONObject indexJson= (JSONObject) jsonParser.parse(fr);
             return Integer.parseInt(indexJson.get("idCategory").toString());
         }catch(IOException | ParseException e){
-            System.out.println("message: "+e.getMessage());
+            System.out.println("LastIndex message: "+e.getMessage());
         }
         return -1;
     }
     
-    public void deteleCategory(Category category){
+    public void deleteCategory(Category category){
         f.setWritable(true);
         try{
             FileReader fr = new FileReader(f);
@@ -138,20 +143,19 @@ public class CategoryDAO {
             }
             arrayJson.remove(tempJson);
             DebtDAO debtDAO = new DebtDAO();
-            MyArrayList<Debt> al=new MyArrayList();
-            al=debtDAO.getByCategoryDebt(category.getId());
+            MyArrayList<Debt> al=debtDAO.getByCategoryDebt(category.getId());
             Debt debt;
+            FileWriter fw=new FileWriter(f);
+            fw.write(arrayJson.toJSONString());
+            f.setWritable(false);
+            fw.flush();
             for(int i=0; i<al.size(); i++){
                 debt=al.get(i);
                 debt.setIdCategory(0);
                 debtDAO.updateDebt(debt);
             }
-            FileWriter fw=new FileWriter(f);
-            fw.write(arrayJson.toJSONString());
-            f.setWritable(false);
-            fw.flush();
         }catch(IOException | NumberFormatException | ParseException e){
-            System.out.println("message: "+e.getMessage());
+            System.out.println("delete message: "+e.getMessage());
         }
     
     }
@@ -177,7 +181,7 @@ public class CategoryDAO {
             f.setWritable(false);
             fw.flush();
         }catch(IOException | NumberFormatException | ParseException e){
-            System.out.println("message: "+e.getMessage());
+            System.out.println("update message: "+e.getMessage());
         }
     
     }
@@ -191,7 +195,26 @@ public class CategoryDAO {
             f.setWritable(false);
             fw.flush();
         }catch(IOException e){
-            System.out.println("message: "+e.getMessage());
+            System.out.println("delete all message: "+e.getMessage());
         }
     }
+    
+    public MyLinkedHashMap<Category, MyArrayList<Debt>> getAllDebtsByCategory(){
+        MyLinkedHashMap<Category, MyArrayList<Debt>> debtsCategory = new MyLinkedHashMap<>();
+        MyLinkedList<Category> categories = getAllCategory();
+        DebtDAO debtDAO = new DebtDAO();
+        for(int i = 0; i < categories.size(); i++){
+            MyArrayList<Debt> temp = debtDAO.getByCategoryDebt(categories.get(i).getId());
+            debtsCategory.put(categories.get(i),temp);
+        }
+        return debtsCategory;
+    }
+    
+    /*public static void main(String[] args) {
+        CategoryDAO cat = new CategoryDAO();
+        MyLinkedHashMap<Category, MyArrayList<Debt>> d = cat.getAllDebtsByCategory();
+        System.out.println(d);
+        Category c = new Category(0, "Sin categoria", 0, 0);
+        System.out.println(d.get(c));
+    }*/
 }

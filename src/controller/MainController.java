@@ -33,14 +33,14 @@ public class MainController {
         }else if(e.getSource()==main.getBtnSi()){
             if(EventController.areThereEvents()){
                 main.cambiarAInfo();
-                EventController.showEventAsc();
+                EventController.showEventMainPanel();
             }else{
                 main.getLblNoHayEventos().setText("¡Felicitaciones! no tiene fraccionamientos pendientes");
                 main.getLblNoHayEventos().setVisible(true);
             }
         }else if(e.getSource()==main.getBtnPagado()){
             EventController.deleteEvent();
-            EventController.showEventAsc();
+            EventController.showEventMainPanel();
         }
     }
     

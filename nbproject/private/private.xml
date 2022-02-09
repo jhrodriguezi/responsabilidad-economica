@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ResponsabilidadEconomica/src/view/Main.java</file>
-            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ResponsabilidadEconomica/src/controller/EventController.java</file>
-            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ResponsabilidadEconomica/src/access/EventDAO.java</file>
-            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ResponsabilidadEconomica/src/controller/DebtController.java</file>
-            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/ResponsabilidadEconomica/src/view/EventView.java</file>
+            <file>file:/D:/Users/PC-LOCAL/Documents/NetBeansProjects/responsabilidad-economica/src/structures/Test.java</file>
+            <file>file:/D:/Users/PC-LOCAL/Documents/NetBeansProjects/responsabilidad-economica/src/structures/MyBinaryHeap.java</file>
+            <file>file:/D:/Users/PC-LOCAL/Documents/NetBeansProjects/responsabilidad-economica/src/structures/MyAVLTree.java</file>
+            <file>file:/D:/Users/PC-LOCAL/Documents/NetBeansProjects/responsabilidad-economica/src/controller/DebtController.java</file>
         </group>
     </open-files>
 </project-private>

@@ -4,7 +4,7 @@
  */
 package model;
 
-public class Debt{
+public class Debt implements Comparable<Debt>{
     private int id;
     private String name;
     private float moneyToPaid; 
@@ -14,6 +14,10 @@ public class Debt{
     private String description; 
     private int idCategory;
     private int percent;
+    
+    public Debt(String name){
+        this.name = name;
+    }
     
     public Debt(int id, String name, float moneyToPaid, String startDate, int numQuotas, String periodicity, String description, int idCategory, int percent){
         this.id = id;
@@ -125,5 +129,10 @@ public class Debt{
     @Override
     public String toString(){
         return ""+this.id+" "+this.name;
+    }
+    
+    @Override
+    public int compareTo(Debt o) {
+        return this.name.toLowerCase().compareTo(o.getName().toLowerCase());
     }
 }

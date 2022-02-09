@@ -1,0 +1,78 @@
+    public String findWay(T x, T y){
+        return findWay(x, y, root);
+    }
+
+    private String findWay(T x, T y, Node<T> t){
+        if(contains(x, obtain(y))){
+                return route(x, obtain(y));
+        }else if(contains(y, obtain(x))){
+                return route(y, obtain(x));
+        }else{
+            Node<T> aux = t;
+            while(aux!=null && (!(x.compareTo(aux.getValue())>0 && y.compareTo(aux.getValue())<0) && !(x.compareTo(aux.getValue())<0 && y.compareTo(aux.getValue())>0))){
+                if(x.compareTo(aux.getValue())<0)
+                    aux=aux.getLeftChild();
+                else
+                    aux=aux.getRightChild();
+            }
+            if(x.compareTo(y)>0){
+                return route(y, x, aux);
+            }else{
+                return route(x, y, aux);
+            }
+        }
+    }
+
+    public String route(T dato, Node<T> t){
+        String s="";
+        Node<T> aux = t;
+        while(aux!=null){
+            if(dato.compareTo(aux.getValue())==0){
+                s+=aux.getValue();
+                break;
+            }else{
+                s+=aux.getValue()+",";
+            } 
+            if(dato.compareTo(aux.getValue())>0)
+                aux=aux.getRightChild();
+            else
+                aux=aux.getLeftChild();
+        }
+        return s;
+    }
+
+    public String route(T x, T y, Node<T> t){
+        String s="";
+        Node<T> aux = t;
+        while(aux!=null){
+            if(x.compareTo(aux.getValue())==0){
+                s+=aux.getValue();
+                break;
+            }else{
+                s+=aux.getValue()+",";
+            } 
+            if(x.compareTo(aux.getValue())>0)
+                aux=aux.getRightChild();
+            else
+                aux=aux.getLeftChild();
+        }
+        String[] sr = s.split(",");
+        s="";
+        for(int i=sr.length-1; i>=0; i--){
+            s+=sr[i]+",";
+        }
+        aux = t.getRightChild();
+        while(aux!=null){
+            if(y.compareTo(aux.getValue())==0){
+                s+=aux.getValue();
+                break;
+            }else{
+                s+=aux.getValue()+",";
+            } 
+            if(y.compareTo(aux.getValue())>0)
+                aux=aux.getRightChild();
+            else
+                aux=aux.getLeftChild();
+        }
+        return s;
+    }

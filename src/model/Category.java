@@ -53,5 +53,33 @@ public class Category {
         this.activeDebt = activeDebt;
     }
     
+    @Override
+    public int hashCode(){
+        int hash = 0;
+        for(int i = 0; i<this.name.length(); i++){
+            if(i<5)
+                hash+=name.charAt(i)*(27^i);
+        }
+        return hash>0?hash:-1*hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Category other = (Category) obj;
+        return this.id == other.id && this.name.equals(other.getName());
+    }
     
+    @Override
+    public String toString(){
+        return name+" "+id;
+    }
 }

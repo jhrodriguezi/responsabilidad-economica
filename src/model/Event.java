@@ -8,7 +8,7 @@ package model;
  *
  * @author DELL
  */
-public class Event {
+public class Event implements Comparable<Event>{
 
     private int id;
     private int idDebt;
@@ -62,6 +62,22 @@ public class Event {
 
     public void setQuota(int quota) {
         this.quota = quota;
+    }
+
+    @Override
+    public int compareTo(Event o) {
+        if(o!=null){
+            String[] d = this.date.split("-"), m = o.getDate().split("-");
+            int sumD, sumM;
+            sumD = Integer.parseInt(d[0])*365+Integer.parseInt(d[1])*12+Integer.parseInt(d[2]);
+            sumM = Integer.parseInt(m[0])*365+Integer.parseInt(m[1])*12+Integer.parseInt(m[2]);
+            if(sumD>sumM)
+                return 1;
+            else if(sumD<sumM)
+                return -1;
+            return 0;
+        }
+        return -1;
     }
 
 }

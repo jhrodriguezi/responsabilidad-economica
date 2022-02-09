@@ -310,18 +310,25 @@ public class Main extends javax.swing.JFrame {
         EventController.refreshEvent();
         EventController.showEvent();
         EventController.startComponentsDeuda();
+        CategoryController.deshabilitarBotonesTablaCategory();
+        DebtController.deshabilitarBotonesTablaDebt();
     }//GEN-LAST:event_btnEventosActionPerformed
 
     private void btnCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriasActionPerformed
         mainController.actionPerformed(evt);
         CategoryController.refreshCategory();
         CategoryController.showCategory();
+        DebtController.deshabilitarBotonesTablaDebt();
+        EventController.deshabilitarBotonesTablaEvent();
     }//GEN-LAST:event_btnCategoriasActionPerformed
 
     private void btnDeudasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeudasActionPerformed
        mainController.actionPerformed(evt);
        DebtController.refreshDebts();
+       DebtController.clearTextSearch();
        DebtController.showDebt();
+       CategoryController.deshabilitarBotonesTablaCategory();
+       EventController.deshabilitarBotonesTablaEvent();
     }//GEN-LAST:event_btnDeudasActionPerformed
 
     private void btnSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiActionPerformed

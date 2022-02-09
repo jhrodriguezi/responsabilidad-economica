@@ -49,6 +49,8 @@ public class DebtView extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         btnUndo = new javax.swing.JButton();
         btnRedo = new javax.swing.JButton();
+        txtSearchDebt = new javax.swing.JTextField();
+        btnSearch = new javax.swing.JButton();
         panelAgregarD = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -151,6 +153,13 @@ public class DebtView extends javax.swing.JPanel {
             }
         });
 
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/searchmagnifierinterfacesymbol1_79893.png"))); // NOI18N
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelPrincipalDLayout = new javax.swing.GroupLayout(panelPrincipalD);
         panelPrincipalD.setLayout(panelPrincipalDLayout);
         panelPrincipalDLayout.setHorizontalGroup(
@@ -160,19 +169,28 @@ public class DebtView extends javax.swing.JPanel {
                     .addGroup(panelPrincipalDLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalDLayout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addComponent(btnMoverAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(btnMoverActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(26, 26, 26)
-                        .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(55, 55, 55)
-                        .addComponent(btnUndo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnRedo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(panelPrincipalDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtSearchDebt)
+                            .addGroup(panelPrincipalDLayout.createSequentialGroup()
+                                .addComponent(btnMoverAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28)
+                                .addComponent(btnMoverActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                                .addGap(26, 26, 26)
+                                .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(panelPrincipalDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelPrincipalDLayout.createSequentialGroup()
+                                .addGap(55, 55, 55)
+                                .addComponent(btnUndo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnRedo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(25, 25, 25))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalDLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(53, 53, 53)))))
                 .addContainerGap())
         );
         panelPrincipalDLayout.setVerticalGroup(
@@ -190,8 +208,12 @@ public class DebtView extends javax.swing.JPanel {
                         .addGap(44, 44, 44))
                     .addGroup(panelPrincipalDLayout.createSequentialGroup()
                         .addGroup(panelPrincipalDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnUndo)
-                            .addComponent(btnRedo))
+                            .addComponent(btnRedo)
+                            .addComponent(btnUndo, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelPrincipalDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSearchDebt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -559,6 +581,10 @@ public class DebtView extends javax.swing.JPanel {
         debtController.ActionPerformed(evt);
     }//GEN-LAST:event_btnRedoActionPerformed
 
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        debtController.ActionPerformed(evt);
+    }//GEN-LAST:event_btnSearchActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
@@ -569,6 +595,7 @@ public class DebtView extends javax.swing.JPanel {
     private javax.swing.JButton btnRedo;
     private javax.swing.JButton btnRegresarActualizar;
     private javax.swing.JButton btnRegresarAgregar;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUndo;
     private javax.swing.JComboBox<String> cbxCategoriaActualizar;
     private javax.swing.JComboBox<String> cbxCategoriaAgregar;
@@ -606,6 +633,7 @@ public class DebtView extends javax.swing.JPanel {
     private javax.swing.JTextField txtNombreAgregar;
     private javax.swing.JTextField txtNumCuotasActualizar;
     private javax.swing.JTextField txtNumCuotasAgregar;
+    private javax.swing.JTextField txtSearchDebt;
     private javax.swing.JTextField txtValorActualizar;
     private javax.swing.JTextField txtValorAgregar;
     // End of variables declaration//GEN-END:variables
@@ -619,6 +647,11 @@ public class DebtView extends javax.swing.JPanel {
     
     public void deshabilitarBotones(){
         this.btnBorrar.setEnabled(false);
+        this.btnMoverActualizar.setEnabled(false);
+    }
+    
+    public void botonesPorcentaje(){
+        this.btnBorrar.setEnabled(true);
         this.btnMoverActualizar.setEnabled(false);
     }
     
@@ -867,6 +900,22 @@ public class DebtView extends javax.swing.JPanel {
 
     public void setTxtValorAgregar(JTextField txtValorAgregar) {
         this.txtValorAgregar = txtValorAgregar;
+    }
+
+    public JButton getBtnSearch() {
+        return btnSearch;
+    }
+
+    public void setBtnSearch(JButton btnSearch) {
+        this.btnSearch = btnSearch;
+    }
+
+    public JTextField getTxtSearchDebt() {
+        return txtSearchDebt;
+    }
+
+    public void setTxtSearchDebt(JTextField txtSearchDebt) {
+        this.txtSearchDebt = txtSearchDebt;
     }
     
     
